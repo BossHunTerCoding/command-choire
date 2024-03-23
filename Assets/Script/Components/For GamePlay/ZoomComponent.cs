@@ -1,4 +1,5 @@
 using CommandChoice.Model;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,14 +11,20 @@ namespace CommandChoice.Component
         [SerializeField] Button button;
         [SerializeField] Image image;
         [SerializeField] Camera Camera;
-        [SerializeField] bool zoomActive;
+        [field: SerializeField] public bool ZoomActive { get; private set; }
         [SerializeField] float zoomSmooth = 8f;
         [SerializeField] float minZoom = 3f;
         [SerializeField] float maxZoom = 6f;
+        [SerializeField] float smoothTime = 0.25f;
+        Vector3 Velocity;
+        float? maxTop = null;
+        float? maxBottom = null;
+        float? maxLeft = null;
+        float? maxRight = null;
 
         void Awake()
         {
-            zoomActive = false;
+            ZoomActive = false;
             Camera = GameObject.FindGameObjectWithTag(StaticText.TagCamera).GetComponent<Camera>();
             button = GetComponent<Button>();
             image = transform.GetChild(0).GetComponent<Image>();
@@ -25,12 +32,25 @@ namespace CommandChoice.Component
 
         void Start()
         {
+            foreach (GameObject item in FindObjectsOfType<GameObject>())
+            {
+                if (item.layer == LayerMask.NameToLayer("Wall"))
+                {
+                    maxRight ??= item.transform.position.x;
+                    maxLeft ??= item.transform.position.x;
+                    maxBottom ??= item.transform.position.y;
+                    maxTop ??= item.transform.position.y;
+                    if (item.transform.position.x > maxRight) maxRight = item.transform.position.x;
+                    if (item.transform.position.x < maxLeft) maxLeft = item.transform.position.x;
+                    if (item.transform.position.y > maxTop) maxTop = item.transform.position.y;
+                    if (item.transform.position.y < maxBottom) maxBottom = item.transform.position.y;
+                }
+            }
             button.onClick.AddListener(() =>
             {
-                zoomActive = !zoomActive;
-
+                ZoomActive = !ZoomActive;
                 CheckScreenSize();
-                if (zoomActive)
+                if (ZoomActive)
                 {
                     image.sprite = Resources.Load<Sprite>(StaticText.PathImgMinimize);
                 }
@@ -43,11 +63,12 @@ namespace CommandChoice.Component
 
         void Update()
         {
-            if (zoomActive && Camera.orthographicSize <= maxZoom)
+            if (ZoomActive && Camera.orthographicSize <= maxZoom)
             {
                 Camera.orthographicSize += Time.deltaTime * zoomSmooth;
+                Camera.transform.position = Vector3.SmoothDamp(Camera.transform.position, new(((maxLeft ?? 0 + maxRight ?? 0) / 2) + maxLeft ?? 0, ((maxBottom ?? 0 + maxTop ?? 0) / 2) + maxBottom ?? 0, Camera.transform.position.z), ref Velocity, smoothTime);
             }
-            else if (!zoomActive && Camera.orthographicSize > minZoom)
+            else if (!ZoomActive && Camera.orthographicSize > minZoom)
             {
                 Camera.orthographicSize -= Time.deltaTime * zoomSmooth;
             }

@@ -94231,8 +94231,8 @@ Transform:
   - {fileID: 1758499437}
   - {fileID: 1732606080}
   - {fileID: 13542936}
-  - {fileID: 132005794}
   - {fileID: 7555382211690712291}
+  - {fileID: 132005794}
   - {fileID: 1403072853}
   - {fileID: 1462803385}
   m_Father: {fileID: 0}
@@ -97418,14 +97418,6 @@ PrefabInstance:
     - target: {fileID: 4093443544342652966, guid: 2bb373bb36df9eb4987d37a07a72acfa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6377664597240594119, guid: 2bb373bb36df9eb4987d37a07a72acfa, type: 3}
-      propertyPath: HP
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6377664597240594119, guid: 2bb373bb36df9eb4987d37a07a72acfa, type: 3}
-      propertyPath: <HP>k__BackingField
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6377664597240594119, guid: 2bb373bb36df9eb4987d37a07a72acfa, type: 3}
       propertyPath: LayerStopMove.m_Bits
@@ -119427,9 +119419,133 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ui GamePlay
       objectReference: {fileID: 0}
+    - target: {fileID: 2671527544909865785, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3730949669673037830, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandBehavior.Array.data[0].<Active>k__BackingField
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandBehavior.Array.data[1].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandBehavior.Array.data[2].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandBehavior.Array.data[3].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandBehavior.Array.data[3].<CanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandBehavior.Array.data[4].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[0].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[1].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[2].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[3].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[4].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[4].<CanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[5].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[6].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[0].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[1].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[2].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[2].<CanUse>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[3].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[3].<CanUse>k__BackingField
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[4].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandFunctions.Array.data[4].<Active>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandFunctions.Array.data[4].<CanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommand>k__BackingField.commandBehavior.Array.data[3].<InfinityCanUse>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[0].<InfinityCanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[1].<InfinityCanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[2].<InfinityCanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[3].<InfinityCanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[4].<InfinityCanUse>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandFunctions.Array.data[4].<InfinityCanUse>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -143059,7 +143175,7 @@ GameObject:
   - component: {fileID: 7555382211690712292}
   m_Layer: 0
   m_Name: Dog
-  m_TagString: Enemy
+  m_TagString: Mail
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143091,9 +143207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2dadf1557660464384f3d7d6a18f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexNavigator: 0
-  indexMovement: 0
+  index: 0
   dirMovement:
+  - {fileID: 845385261}
   - {fileID: 142963402}
   - {fileID: 1652237174}
   - {fileID: 1013269129}
@@ -143102,7 +143218,6 @@ MonoBehaviour:
   - {fileID: 1095525200}
   - {fileID: 557877017}
   - {fileID: 845385261}
-  smoothMovement: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

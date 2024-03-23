@@ -10,6 +10,7 @@ namespace CommandChoice.Component
         [SerializeField] private Vector3 offset;
         [SerializeField] private float smoothTime = 0.25f;
         [SerializeField] private Vector3 velocity = Vector3.zero;
+        ZoomComponent zoomComponent;
 
         void Awake()
         {
@@ -17,10 +18,18 @@ namespace CommandChoice.Component
             player = GameObject.FindGameObjectWithTag(StaticText.TagPlayer);
         }
 
+        void Start()
+        {
+            zoomComponent = GameObject.Find("Zoom").GetComponent<ZoomComponent>();
+        }
+
         void Update()
         {
-            Vector3 targetPosition = player.transform.position + offset;
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            if (!zoomComponent.ZoomActive)
+            {
+                Vector3 targetPosition = player.transform.position + offset;
+                transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            }
         }
     }
 }
