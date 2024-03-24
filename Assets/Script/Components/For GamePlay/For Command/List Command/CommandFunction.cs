@@ -45,13 +45,16 @@ namespace CommandChoice.Component
                 commandComponent.enabled = true;
                 gameObject.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    if (StaticText.CheckCommandCanConfig(commandComponent.gameObject.name))
+                    if (!CommandManager.DataThisGame.playActionCommand)
                     {
-                        CommandManager.ConfigCommand(commandComponent, this);
-                    }
-                    else if (StaticText.CheckCommandCanTrigger(commandComponent.gameObject.name))
-                    {
-                        CommandManager.TriggerCommand(commandComponent, this);
+                        if (StaticText.CheckCommandCanConfig(commandComponent.gameObject.name))
+                        {
+                            CommandManager.ConfigCommand(commandComponent, this);
+                        }
+                        else if (StaticText.CheckCommandCanTrigger(commandComponent.gameObject.name))
+                        {
+                            CommandManager.TriggerCommand(commandComponent, this);
+                        }
                     }
                 });
 
@@ -64,7 +67,7 @@ namespace CommandChoice.Component
 
         public void UpdateTextCommand(string nameCommand, bool reset = false)
         {
-            if(reset)
+            if (reset)
             {
                 countTime = countDefault;
                 trigger = triggerDefault;
@@ -77,7 +80,7 @@ namespace CommandChoice.Component
         {
             if (setNew) countTime = countDefault;
             countTime -= 1;
-            if(countTime < 0) countTime = 0;
+            if (countTime < 0) countTime = 0;
             return countTime;
         }
 

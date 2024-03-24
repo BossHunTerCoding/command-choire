@@ -36,6 +36,7 @@ namespace CommandChoice.Component
             {
                 if (scene[i].getNameForLoadScene() == SceneManager.GetActiveScene().name)
                 {
+                    scene[i].DetailLevelScene.MailLevelScene = player.Mail;
                     foreach (var item in commandManager.ListCommandSelected)
                     {
                         if (item.name != StaticText.EndLoop) scene[i].DetailLevelScene.CountBoxCommand++;

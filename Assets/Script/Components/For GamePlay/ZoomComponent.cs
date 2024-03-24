@@ -17,6 +17,7 @@ namespace CommandChoice.Component
         [SerializeField] float maxZoom = 6f;
         [SerializeField] float smoothTime = 0.25f;
         Vector3 Velocity;
+        [SerializeField] Vector3 vectorPosition;
         float? maxTop = null;
         float? maxBottom = null;
         float? maxLeft = null;
@@ -63,14 +64,15 @@ namespace CommandChoice.Component
 
         void Update()
         {
-            if (ZoomActive && Camera.orthographicSize <= maxZoom)
+            if (ZoomActive)
             {
-                Camera.orthographicSize += Time.deltaTime * zoomSmooth;
-                Camera.transform.position = Vector3.SmoothDamp(Camera.transform.position, new(((maxLeft ?? 0 + maxRight ?? 0) / 2) + maxLeft ?? 0, ((maxBottom ?? 0 + maxTop ?? 0) / 2) + maxBottom ?? 0, Camera.transform.position.z), ref Velocity, smoothTime);
+                vectorPosition = new(((maxLeft ?? 0 + maxRight ?? 0) / 2) + maxLeft / 2 ?? 0, ((maxBottom ?? 0 + maxTop ?? 0) / 2) + maxBottom - 2f ?? 0, Camera.transform.position.z);
+                if (Camera.orthographicSize <= maxZoom) Camera.orthographicSize += Time.deltaTime * zoomSmooth;
+                Camera.transform.position = Vector3.SmoothDamp(Camera.transform.position, vectorPosition, ref Velocity, smoothTime);
             }
-            else if (!ZoomActive && Camera.orthographicSize > minZoom)
+            else if (!ZoomActive)
             {
-                Camera.orthographicSize -= Time.deltaTime * zoomSmooth;
+                if (Camera.orthographicSize > minZoom) Camera.orthographicSize -= Time.deltaTime * zoomSmooth;
             }
         }
 
