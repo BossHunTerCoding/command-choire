@@ -10,7 +10,7 @@ namespace CommandChoice.Component
     {
         public float speedScroll;
         [field: SerializeField] public TypeCommand Type { get; private set; }
-        [SerializeField] private ParentCommand Parent = new();
+        [field: SerializeField] public ParentCommand Parent { get; private set; } = new();
 
         [field: SerializeField] public GameObject RootContentCommand { get; private set; }
         [field: SerializeField] public CommandManager CommandManager { get; private set; }
@@ -180,20 +180,31 @@ namespace CommandChoice.Component
 
                 if (Type == TypeCommand.Function)
                 {
-                    if (dropCommandObject.transform.position.y - transform.position.y >= 80)
+                    RectTransform targetRect = eventData.pointerEnter.GetComponent<RectTransform>();
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRect, eventData.position, eventData.pressEventCamera, out Vector2 localPoint);
+
+                    // Check if the dragged point is near the top or bottom edge
+                    float topDistance = Mathf.Abs(localPoint.y - targetRect.rect.yMax);
+                    float bottomDistance = Mathf.Abs(localPoint.y - targetRect.rect.yMin);
+                    //print($"{topDistance} {bottomDistance}");
+                    bool nearTopEdge = false;
+                    bool nearBottomEdge = false;
+                    if (topDistance < 40)
                     {
+                        //Debug.Log("Near top edge");
                         dropCommandObject.Parent.UpdateIndex(transform.GetSiblingIndex());
                         dropCommandObject.Parent.UpdateParent(transform.parent);
+                        nearTopEdge = true;
                     }
-                    else if (dropCommandObject.transform.position.y - transform.position.y <= -60)
+
+                    if (bottomDistance < 40)
                     {
+                        //Debug.Log("Near bottom edge");
                         dropCommandObject.Parent.UpdateIndex(transform.GetSiblingIndex() + 1);
                         dropCommandObject.Parent.UpdateParent(transform.parent);
+                        nearBottomEdge = true;
                     }
-                    else
-                    {
-                        dropCommandObject.Parent.UpdateParentAndIndex(transform, 1);
-                    }
+                    if ((nearTopEdge && nearBottomEdge) || (!nearTopEdge && !nearBottomEdge)) dropCommandObject.Parent.UpdateParentAndIndex(transform, 1);
                 }
                 else
                 {

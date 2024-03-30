@@ -25,10 +25,17 @@ namespace CommandChoice.Component
 
         void Update()
         {
-            if (!zoomComponent.ZoomActive)
+            try
             {
-                Vector3 targetPosition = player.transform.position + offset;
-                transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+                if (!zoomComponent.ZoomActive)
+                {
+                    Vector3 targetPosition = player.transform.position + offset;
+                    transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+                }
+            }
+            catch (System.Exception)
+            {
+                zoomComponent = GameObject.Find("Zoom").GetComponent<ZoomComponent>();
             }
         }
     }
