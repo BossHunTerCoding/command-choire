@@ -16,6 +16,12 @@ namespace CommandChoice.Component
         [SerializeField] Text timeText;
         [SerializeField] Text commandText;
         [SerializeField] List<GameObject> mail;
+        PlayerManager player;
+
+        void Awake()
+        {
+            player = GameObject.FindWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>();
+        }
 
         void Start()
         {
@@ -28,7 +34,6 @@ namespace CommandChoice.Component
 
         public void GetData()
         {
-            PlayerManager player = GameObject.FindWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>();
             CommandManager commandManager = GameObject.FindGameObjectWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
             List<LevelSceneModel> scene = DataGlobal.Scene.ListLevelScene;
             bool newScore = false;
@@ -37,9 +42,10 @@ namespace CommandChoice.Component
                 if (scene[i].getNameForLoadScene() == SceneManager.GetActiveScene().name)
                 {
                     scene[i].DetailLevelScene.MailLevelScene = player.Mail;
+                    int boxCount = 0;
                     foreach (var item in commandManager.ListCommandSelected)
                     {
-                        if (item.name != StaticText.EndLoop) scene[i].DetailLevelScene.CountBoxCommand++;
+                        if (item.name != StaticText.EndLoop) boxCount++;
                     }
                     for (int j = 0; j < scene[i].DetailLevelScene.MailLevelScene; j++)
                     {
@@ -54,18 +60,32 @@ namespace CommandChoice.Component
                             percentScore -= DataGlobal.minusScoreLostMail;
                         }
                     }
-                    commandText.text = scene[i].DetailLevelScene.CountBoxCommand.ToString();
-                    scene[i].DetailLevelScene.ScoreLevelScene = percentScore;
-                    if (scene[i].DetailLevelScene.ScoreLevelScene > 100) scene[i].DetailLevelScene.ScoreLevelScene = 100;
-                    else if (scene[i].DetailLevelScene.ScoreLevelScene < 0) scene[i].DetailLevelScene.ScoreLevelScene = 0;
-                    scoreText.text = $"{scene[i].DetailLevelScene.ScoreLevelScene}%";
-                    scene[i].DetailLevelScene.MailLevelScene = player.Mail;
-                    scene[i].DetailLevelScene.UseTime = commandManager.TimeCount;
-                    timeText.text = commandManager.TimeCount.ToString();
-                    newScore = scene[i].DetailLevelScene.NewHightScore(100);
+                    if (percentScore > 100) percentScore = 100;
+                    else if (percentScore < 0) percentScore = 0;
+
+                    if (scene[i].DetailLevelScene.ScoreLevelScene <= percentScore) newScore = true;
+
                     foreach (GameObject item in mail) { item.SetActive(false); }
+
+                    commandText.text = boxCount.ToString();
+                    scoreText.text = $"{percentScore}%";
+                    timeText.text = commandManager.TimeCount.ToString();
+
+                    if (newScore)
+                    {
+                        scoreText.text = scene[i].DetailLevelScene.ScoreLevelScene < percentScore ? $"New Score: {scene[i].DetailLevelScene.ScoreLevelScene}% >> {percentScore}%" : $"{percentScore}";
+                        commandText.text = scene[i].DetailLevelScene.CountBoxCommand > boxCount ? $"New Count: {scene[i].DetailLevelScene.CountBoxCommand} >> {boxCount}" : $"{boxCount}";
+                        timeText.text = scene[i].DetailLevelScene.UseTime > commandManager.TimeCount ? $"New Count: {scene[i].DetailLevelScene.UseTime} >> {commandManager.TimeCount}" : $"{commandManager.TimeCount}";
+                    }
+
                     if (player.Mail > 0 && player.HP > 0)
                     {
+                        if (newScore)
+                        {
+                            scene[i].DetailLevelScene.ScoreLevelScene = percentScore;
+                            scene[i].DetailLevelScene.MailLevelScene = player.Mail;
+                            scene[i].DetailLevelScene.UseTime = commandManager.TimeCount;
+                        }
                         try
                         {
                             scene[i + 1].DetailLevelScene.UnLockLevelScene = true;
@@ -73,12 +93,18 @@ namespace CommandChoice.Component
                         }
                         catch (System.Exception)
                         {
-                            continueButton.GetComponentInChildren<Text>().text = "Return to Select Levels";
+                            continueButton.GetComponentInChildren<Text>().text = "Select Levels";
                             continueButton.onClick.AddListener(() => SceneGameManager.LoadScene(SceneMenu.SelectLevel.ToString()));
                         }
+
+                        // Save JsonData File
+                        var jsonData = JsonUtility.ToJson(DataGlobal.Scene);
+                        var pathJson = Application.persistentDataPath + "/SceneData.json";
+                        System.IO.File.WriteAllText(pathJson, jsonData);
                     }
                     else
                     {
+                        scoreText.text = "Score Fail";
                         continueButton.GetComponentInChildren<Text>().text = "Exit";
                         continueButton.onClick.AddListener(() => SceneGameManager.LoadScene(SceneMenu.SelectLevel.ToString()));
                     }

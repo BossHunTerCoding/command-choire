@@ -36,8 +36,10 @@ namespace CommandChoice.Model
         public const string PathPrefabConfigCommandForFunction = "Ui/Command/Config Command Function";
         public const string PathPrefabBlockCommandForFunction = "Ui/Command/Block Command Function";
         public const string PathPrefabCommand = "Ui/Button/Command";
+        public const string PathPrefabCommandSpecial = "Ui/Button/Command Special";
         public const string RootListContentCommand = "List Content Command";
         public const string RootListViewCommand = "List View Command";
+        public const string RootFixCommand = "Fix Command";
 
         public static bool CheckCommand(string command)
         {

@@ -15,6 +15,8 @@ namespace CommandChoice.Model
         [SerializeField]
         public List<CommandModel> commandFunctions;
         [SerializeField]
+        public List<CommandModel> commandEnv;
+        [SerializeField]
         public List<Color32> listColorCommands;
 
         public bool CommandIsEmpty(int command)
@@ -80,6 +82,11 @@ namespace CommandChoice.Model
                 new(StaticText.Loop),
                 new(StaticText.SkipTo),
                 new(StaticText.Trigger),
+            };
+
+            commandEnv = new List<CommandModel>(){
+                new("sand"),
+                new("Dirt"),
             };
 
             listColorCommands = new List<Color32>(){

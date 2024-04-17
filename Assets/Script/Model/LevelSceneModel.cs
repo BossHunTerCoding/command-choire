@@ -2,10 +2,11 @@ using UnityEngine;
 
 namespace CommandChoice.Model
 {
+    [System.Serializable]
     public class LevelSceneModel
     {
-        public string NameLevelScene { get; private set; } = "LevelScene";
-        public LevelSceneDetailModel DetailLevelScene { get; private set; } = new();
+        public string NameLevelScene = "LevelScene";
+        public LevelSceneDetailModel DetailLevelScene = new();
 
         public string getNameForLoadScene()
         {
@@ -18,19 +19,13 @@ namespace CommandChoice.Model
         }
     }
 
+    [System.Serializable]
     public class LevelSceneDetailModel
     {
-        public bool UnLockLevelScene { get; set; } = false;
-        public double ScoreLevelScene { get; set; } = 0;
-        public int CountBoxCommand { get; set; } = 0;
-        public int MailLevelScene { get; set; } = 0;
-        public int UseTime { get; set; } = 0;
-
-        public bool NewHightScore(double newScore)
-        {
-            if (ScoreLevelScene <= newScore) return false;
-            ScoreLevelScene = newScore;
-            return true;
-        }
+        public bool UnLockLevelScene = false;
+        public double ScoreLevelScene = 0;
+        public int CountBoxCommand = 0;
+        public int MailLevelScene = 0;
+        public int UseTime = 0;
     }
 }

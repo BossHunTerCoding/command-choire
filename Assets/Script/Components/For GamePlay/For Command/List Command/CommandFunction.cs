@@ -86,7 +86,8 @@ namespace CommandChoice.Component
 
         private void StartConfigCommandFunction(Command command)
         {
-            if (command.gameObject.name == StaticText.Loop) CommandManager.ConfigCommand(command, this); ;
+            if (command.gameObject.name == StaticText.Loop) CommandManager.ConfigCommand(command, this);
+            else if (command.gameObject.name == StaticText.If) gameObject.GetComponent<IfCommand>().GenerateMenu();
         }
 
         public void UpdateColor(Transform transform, bool revers = false)

@@ -79299,6 +79299,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 773423932270226209, guid: 2bb373bb36df9eb4987d37a07a72acfa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4093443544342652966, guid: 2bb373bb36df9eb4987d37a07a72acfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1676.48
@@ -98276,6 +98280,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3649825216057407755, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: menuListCommand
+      value: 
+      objectReference: {fileID: 8932253686058748314, guid: b8e0d266f30b66543aa05a4caf728bae, type: 3}
     - target: {fileID: 3730949669673037830, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -98326,6 +98334,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
       propertyPath: <ListCommandModel>k__BackingField.commandBehavior.Array.data[4].<Active>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandFunctions.Array.data[4].<Active>k__BackingField
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}

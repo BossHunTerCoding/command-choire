@@ -32,7 +32,24 @@ namespace CommandChoice.Component
         }
         void InitializedData(List<GameObject> buttons)
         {
-            DataGlobal.Scene.ListLevelScene[0].DetailLevelScene.UnLockLevelScene = true;
+            try
+            {
+                // Load Json data file
+                var pathJson = Application.persistentDataPath + "/SceneData.json";
+                var JsonData = System.IO.File.ReadAllText(pathJson);
+                DataGlobal.LoadSceneData(JsonData);
+            }
+            catch (System.Exception) { }
+
+            try
+            {
+                DataGlobal.Scene.ListLevelScene[0].DetailLevelScene.UnLockLevelScene = true;
+            }
+            catch (System.Exception)
+            {
+                DataGlobal.Scene = new(StaticText.PathLevelScene);
+                DataGlobal.Scene.ListLevelScene[0].DetailLevelScene.UnLockLevelScene = true;
+            }
 
             for (int i = 0; i < buttons.Count; i++)
             {

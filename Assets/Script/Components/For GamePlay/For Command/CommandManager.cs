@@ -18,7 +18,6 @@ namespace CommandChoice.Component
         [field: SerializeField] public GameObject AddCommandButton { get; private set; }
         [field: SerializeField] public GameObject DropRemoveCommand { get; private set; }
         [field: SerializeField] public List<Transform> ListCommandSelected { get; private set; } = new();
-        private readonly List<LoopCommandModel> LoopCommands = new();
 
         void Start()
         {
@@ -135,12 +134,24 @@ namespace CommandChoice.Component
             };
         }
 
+        public void IfCheckCommand(string nameCommand)
+        {
+            Transform rootIfCommand = GameObject.FindWithTag(StaticText.RootFixCommand).transform;
+            if (rootIfCommand.childCount == 0) return;
+            foreach (GameObject item in rootIfCommand)
+            {
+                if (nameCommand == item.GetComponent<IfCommand>().command.name)
+                {
+
+                }
+            }
+        }
+
         public void ResetAction(bool stopCoroutinesOnly = false)
         {
             StopAllCoroutines();
             if (stopCoroutinesOnly) return;
             countTime.text = "";
-            LoopCommands.Clear();
             foreach (Transform item in ListCommandSelected)
             {
                 Command command1 = item.GetComponent<Command>();
@@ -181,13 +192,14 @@ namespace CommandChoice.Component
         private IEnumerator RunCommand(List<Transform> listCommand, int? timeSet = null, bool IsChild = false)
         {
             if (timeSet == null) TimeCount = 0;
+            else TimeCount = (int)timeSet;
 
             countTime.text = $"Count: {TimeCount}";
             PlayerManager player = GameObject.FindGameObjectWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>();
             foreach (var item in listCommand.Select((value, index) => new { value, index }))
             {
-                bool SkipAction = false;
                 yield return new WaitForSeconds(DataGlobal.timeDeray);
+                if (item.value.name != StaticText.Loop) countTime.text = $"Count: {++TimeCount}";
                 try
                 {
                     listCommand[item.index - 1].GetComponent<Command>().ResetAction();
@@ -222,10 +234,11 @@ namespace CommandChoice.Component
                     }
                     command.CommandFunction.UsedLoopCount();
                     command.CommandFunction.UpdateTextCommand(item.value.name);
-                    SkipAction = true;
                 }
-                countTime.text = $"Count: {TimeCount += 1}";
-                if (!SkipAction) { }
+                else if(item.value.name == StaticText.If)
+                {
+                    
+                }
             }
             //print("End Run");
         }

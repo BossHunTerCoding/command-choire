@@ -4,9 +4,10 @@ using System.Linq;
 
 namespace CommandChoice.Model
 {
+    [System.Serializable]
     public class SceneModel
     {
-        public List<LevelSceneModel> ListLevelScene { get; private set; } = new List<LevelSceneModel>();
+        public List<LevelSceneModel> ListLevelScene = new();
 
         public SceneModel(string pathLevelSceneFolder)
         {
