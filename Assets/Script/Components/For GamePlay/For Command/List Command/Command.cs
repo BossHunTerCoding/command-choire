@@ -26,6 +26,10 @@ namespace CommandChoice.Component
         [SerializeField] private VerticalLayoutGroup verticalLayout;
         [SerializeField] private ContentSizeFitter contentSize;
 
+        public bool isLock = false;
+        [SerializeField] private int indexLock = 0;
+        [SerializeField] private GameObject LockObject;
+
         void Awake()
         {
             RootContentCommand = GameObject.FindGameObjectWithTag(StaticText.RootListContentCommand);
@@ -37,6 +41,19 @@ namespace CommandChoice.Component
 
         void Start()
         {
+            if (isLock)
+            {
+                LockObject = GameObject.Find("lock");
+                LockObject.GetComponent<Image>().enabled = isLock;
+                foreach (Transform item in transform)
+                {
+                    try
+                    {
+                        item.GetComponent<Command>().isLock = true;
+                    }
+                    catch (Exception) { }
+                }
+            }
             gameObject.tag = StaticText.TagCommand;
             CommandFunction = transform.GetChild(0).GetComponent<CommandFunction>();
             image = gameObject.GetComponent<Image>();
@@ -67,7 +84,11 @@ namespace CommandChoice.Component
 
         void Update()
         {
-            if (OnDrag)
+            if (isLock && transform.GetSiblingIndex() != (indexLock == 0 ? transform.GetSiblingIndex() : indexLock))
+            {
+                transform.SetSiblingIndex(indexLock == 0 ? transform.GetSiblingIndex() : indexLock);
+            }
+            if (OnDrag && !isLock)
             {
                 float distance = eventData.pointerDrag.transform.position.y - beginDrag.y;
                 float distanceConvert = (float)Math.Round(distance / 500f, 6);
@@ -112,7 +133,7 @@ namespace CommandChoice.Component
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
-            if (!CommandManager.DataThisGame.playActionCommand)
+            if (!CommandManager.DataThisGame.playActionCommand && !isLock)
             {
                 //Debug.Log($"OnBeginDrag '{gameObject.name}'");
                 this.eventData = eventData;
@@ -137,7 +158,7 @@ namespace CommandChoice.Component
         }
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
-            if (!CommandManager.DataThisGame.playActionCommand)
+            if (!CommandManager.DataThisGame.playActionCommand && !isLock)
             {
                 //Debug.Log($"OnDrag '{gameObject.name}'");
                 transform.position = Input.mousePosition;
@@ -147,7 +168,7 @@ namespace CommandChoice.Component
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
-            if (!CommandManager.DataThisGame.playActionCommand)
+            if (!CommandManager.DataThisGame.playActionCommand && !isLock)
             {
                 //Debug.Log($"OnEndDrag '{gameObject.name}'");
                 transform.SetParent(Parent.parent);
@@ -174,7 +195,7 @@ namespace CommandChoice.Component
 
         void IDropHandler.OnDrop(PointerEventData eventData)
         {
-            if (!CommandManager.DataThisGame.playActionCommand)
+            if (!CommandManager.DataThisGame.playActionCommand && !isLock)
             {
                 Command dropCommandObject = eventData.pointerDrag.GetComponent<Command>();
 

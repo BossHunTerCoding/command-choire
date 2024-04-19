@@ -67,13 +67,17 @@ namespace CommandChoice.Component
 
         public void UpdateTextCommand(string nameCommand, bool reset = false)
         {
-            if (reset)
+            try
             {
-                countTime = countDefault;
-                trigger = triggerDefault;
+                if (reset)
+                {
+                    countTime = countDefault;
+                    trigger = triggerDefault;
+                }
+                Text command = transform.GetChild(0).GetComponent<Text>();
+                command.text = StaticText.CommandDisplay(nameCommand, this);
             }
-            Text command = transform.GetChild(0).GetComponent<Text>();
-            command.text = StaticText.CommandDisplay(nameCommand, this);
+            catch (System.Exception) { }
         }
 
         public int UsedLoopCount(bool setNew = false)

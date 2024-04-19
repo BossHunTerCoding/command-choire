@@ -46,17 +46,17 @@ namespace CommandChoice.Component
                 }
             }
             ListCommandSelected.Clear();
-            LoopCheckCommand(listCommand);
+            StartCoroutine(RunCommand(LoopCheckCommand(listCommand)));
             DataThisGame.playActionCommand = true;
             AddCommandButton.SetActive(false);
         }
 
-        private void LoopCheckCommand(List<Transform> transformObject)
+        private List<Transform> LoopCheckCommand(List<Transform> transformObject)
         {
             foreach (Transform parent in transformObject)
             {
                 if (StaticText.CheckCommand(parent.gameObject.name)) ListCommandSelected.Add(parent);
-                if (parent.childCount > 1)
+                if (parent.childCount > 1 && parent.gameObject.name != StaticText.If)
                 {
                     foreach (Transform child in parent)
                     {
@@ -113,13 +113,13 @@ namespace CommandChoice.Component
             //     Debug.Log(item.name);
             // }
 
-            StartCoroutine(RunCommand(OutputRunCommand));
+            return OutputRunCommand;
         }
 
         private void LoopCheckCommand(Transform transformObject)
         {
             if (StaticText.CheckCommand(transformObject.gameObject.name)) ListCommandSelected.Add(transformObject);
-            if (transformObject.childCount > 1)
+            if (transformObject.childCount > 1 && transformObject.gameObject.name != StaticText.If)
             {
                 foreach (Transform child in transformObject)
                 {
@@ -235,10 +235,36 @@ namespace CommandChoice.Component
                     command.CommandFunction.UsedLoopCount();
                     command.CommandFunction.UpdateTextCommand(item.value.name);
                 }
-                else if(item.value.name == StaticText.If)
+                else if (item.value.name == StaticText.If)
                 {
-                    
+                    bool active = false;
+                    print(item.value.transform.parent.transform.parent);
+                    for (int i = 0; i < item.value.transform.parent.childCount; i++)
+                    {
+                        print(i);
+                        if(i == item.value.GetSiblingIndex()) break;
+                        if (item.value.transform.parent.GetChild(i).name == item.value.GetChild(0).GetComponent<IfCommand>().command.name)
+                        {
+                            active = true;
+                            break;
+                        }
+                    }
+                    print(active);
+                    if (active)
+                    {
+                        ListCommandSelected.Clear();
+                        List<Transform> transformsCommandIf = new();
+                        for (int i = 0; i < item.value.childCount; i++)
+                        {
+                            if (i == 0) continue;
+                            transformsCommandIf.Add(item.value.GetChild(i).transform);
+                        }
+                        yield return RunCommand(LoopCheckCommand(transformsCommandIf), TimeCount);
+                    }
+                    else continue;
                 }
+                yield return new WaitForSeconds(DataGlobal.timeDeray);
+                listCommand[item.index].GetComponent<Command>().ResetAction();
             }
             //print("End Run");
         }
