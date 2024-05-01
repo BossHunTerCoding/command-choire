@@ -51,10 +51,6 @@ namespace CommandChoice.Component
                         {
                             CommandManager.ConfigCommand(commandComponent, this);
                         }
-                        else if (StaticText.CheckCommandCanTrigger(commandComponent.gameObject.name))
-                        {
-                            CommandManager.TriggerCommand(commandComponent, this);
-                        }
                     }
                 });
 
@@ -75,7 +71,7 @@ namespace CommandChoice.Component
                     trigger = triggerDefault;
                 }
                 Text command = transform.GetChild(0).GetComponent<Text>();
-                command.text = StaticText.CommandDisplay(nameCommand, this);
+                command.text = StaticText.CommandDisplay(nameCommand, this, command.text);
             }
             catch (System.Exception) { }
         }

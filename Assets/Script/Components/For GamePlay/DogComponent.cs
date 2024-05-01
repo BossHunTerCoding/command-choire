@@ -13,6 +13,7 @@ public class DogComponent : MonoBehaviour
     [SerializeField] Coroutine stepFootWalk;
     GameObject footWalk;
     Vector2 startPosition;
+    [SerializeField] int damage = 1;
     [SerializeField] float smoothMovement = 3f;
     DataGamePlay dataThisGame = new();
 
@@ -69,7 +70,10 @@ public class DogComponent : MonoBehaviour
         if (other.gameObject.CompareTag(StaticText.TagPlayer))
         {
             PlayerManager player = other.gameObject.GetComponent<PlayerManager>();
-            player.TakeDamage();
+            damage = damage > 0 ? damage * -1 : damage;
+            player.UpdateHP(damage);
+            player.UpdateMail(damage);
+            CommandManager.TriggerObjects(gameObject.tag);
         }
     }
 }

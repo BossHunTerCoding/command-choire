@@ -47,19 +47,7 @@ namespace CommandChoice.Component
                     if (item.transform.position.y < maxBottom) maxBottom = item.transform.position.y;
                 }
             }
-            button.onClick.AddListener(() =>
-            {
-                ZoomActive = !ZoomActive;
-                CheckScreenSize();
-                if (ZoomActive)
-                {
-                    image.sprite = Resources.Load<Sprite>(StaticText.PathImgMinimize);
-                }
-                else
-                {
-                    image.sprite = Resources.Load<Sprite>(StaticText.PathImgZoom);
-                }
-            });
+            button.onClick.AddListener(() => OnClickActiveZoom());
         }
 
         void Update()
@@ -73,6 +61,20 @@ namespace CommandChoice.Component
             else if (!ZoomActive)
             {
                 if (Camera.orthographicSize > minZoom) Camera.orthographicSize -= Time.deltaTime * zoomSmooth;
+            }
+        }
+
+        public void OnClickActiveZoom()
+        {
+            ZoomActive = !ZoomActive;
+            CheckScreenSize();
+            if (ZoomActive)
+            {
+                image.sprite = Resources.Load<Sprite>(StaticText.PathImgMinimize);
+            }
+            else
+            {
+                image.sprite = Resources.Load<Sprite>(StaticText.PathImgZoom);
             }
         }
 

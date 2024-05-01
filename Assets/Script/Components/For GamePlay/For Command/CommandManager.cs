@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using CommandChoice.Data;
 using CommandChoice.Model;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +20,8 @@ namespace CommandChoice.Component
         [field: SerializeField] public GameObject AddCommandButton { get; private set; }
         [field: SerializeField] public GameObject DropRemoveCommand { get; private set; }
         [field: SerializeField] public List<Transform> ListCommandSelected { get; private set; } = new();
+
+        public static string triggerEvent = null;
 
         void Start()
         {
@@ -51,10 +55,16 @@ namespace CommandChoice.Component
             AddCommandButton.SetActive(false);
         }
 
-        private List<Transform> LoopCheckCommand(List<Transform> transformObject)
+        public void UpdateTime(int time = 1)
+        {
+            countTime.text = $"Count: {TimeCount += time}";
+        }
+
+        public List<Transform> LoopCheckCommand(List<Transform> transformObject, bool ignoreTagTrigger = true)
         {
             foreach (Transform parent in transformObject)
             {
+                if (parent.tag == "Trigger" && ignoreTagTrigger) continue;
                 if (StaticText.CheckCommand(parent.gameObject.name)) ListCommandSelected.Add(parent);
                 if (parent.childCount > 1 && parent.gameObject.name != StaticText.If)
                 {
@@ -152,7 +162,10 @@ namespace CommandChoice.Component
             StopAllCoroutines();
             if (stopCoroutinesOnly) return;
             countTime.text = "";
-            foreach (Transform item in ListCommandSelected)
+            List<GameObject> ListAllCommand = new() { };
+            ListAllCommand.AddRange(GameObject.FindGameObjectsWithTag(StaticText.TagCommand));
+            ListAllCommand.AddRange(GameObject.FindGameObjectsWithTag("Trigger"));
+            foreach (GameObject item in ListAllCommand)
             {
                 Command command1 = item.GetComponent<Command>();
                 if (command1 == null) continue;
@@ -189,7 +202,7 @@ namespace CommandChoice.Component
             AddCommandButton.SetActive(true);
         }
 
-        private IEnumerator RunCommand(List<Transform> listCommand, int? timeSet = null, bool IsChild = false)
+        public IEnumerator RunCommand(List<Transform> listCommand, int? timeSet = null, bool IsChild = false)
         {
             if (timeSet == null) TimeCount = 0;
             else TimeCount = (int)timeSet;
@@ -198,8 +211,28 @@ namespace CommandChoice.Component
             PlayerManager player = GameObject.FindGameObjectWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>();
             foreach (var item in listCommand.Select((value, index) => new { value, index }))
             {
+                if (triggerEvent != null)
+                {
+                    GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Trigger");
+                    string trigger = triggerEvent;
+                    triggerEvent = null;
+                    if (gameObjects.Length > 0)
+                    {
+                        foreach (GameObject gameObject in gameObjects)
+                        {
+                            if (gameObject.GetComponent<TriggerComponent>().tagTrigger == trigger)
+                            {
+                                ListCommandSelected.Clear();
+                                List<Transform> transformsCommand = new() { gameObject.transform };
+                                yield return RunCommand(LoopCheckCommand(transformsCommand, false), TimeCount);
+                            }
+                            else continue;
+                        }
+                    };
+                }
                 yield return new WaitForSeconds(DataGlobal.timeDeray);
-                if (item.value.name != StaticText.Loop) countTime.text = $"Count: {++TimeCount}";
+                //if (item.value.name != StaticText.Loop) countTime.text = $"Count: {++TimeCount}";
+                countTime.text = $"Count: {++TimeCount}";
                 try
                 {
                     listCommand[item.index - 1].GetComponent<Command>().ResetAction();
@@ -242,7 +275,7 @@ namespace CommandChoice.Component
                     for (int i = 0; i < item.value.transform.parent.childCount; i++)
                     {
                         print(i);
-                        if(i == item.value.GetSiblingIndex()) break;
+                        if (i == item.value.GetSiblingIndex()) break;
                         if (item.value.transform.parent.GetChild(i).name == item.value.GetChild(0).GetComponent<IfCommand>().command.name)
                         {
                             active = true;
@@ -297,13 +330,9 @@ namespace CommandChoice.Component
             config.GetCommand(command, commandFunction);
         }
 
-        public void TriggerCommand(Command command, CommandFunction commandFunction)
+        public static void TriggerObjects(string tagObjectTrigger)
         {
-            List<GameObject> l = new(GameObject.FindGameObjectsWithTag(StaticText.TagCommand));
-            foreach (var item in l)
-            {
-                print(item.name);
-            }
+            triggerEvent = tagObjectTrigger;
         }
     }
 }

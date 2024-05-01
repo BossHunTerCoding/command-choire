@@ -90,29 +90,18 @@ namespace CommandChoice.Component
             }
         }
 
-        public void TakeDamage()
+        public void UpdateHP(int getCountHP)
         {
-            HP--;
+            HP += getCountHP;
             UpdateText();
             if (HP <= 0) GameOver();
         }
 
-        public void Heal()
-        {
-            HP++;
-            UpdateText();
-        }
-
-        public void GetMail(int getCountMail)
+        public void UpdateMail(int getCountMail)
         {
             Mail += getCountMail;
             if (Mail > 3) Mail = 3;
-            UpdateText();
-        }
-        public void DropMail(int dropCountMail)
-        {
-            Mail += dropCountMail;
-            if (Mail < 0) Mail = 0;
+            else if (Mail < 0) Mail = 0;
             UpdateText();
         }
 

@@ -91,7 +91,7 @@ namespace CommandChoice.Model
             return false;
         }
 
-        public static string CommandDisplay(string nameCommand, CommandFunction commandFunction)
+        public static string CommandDisplay(string nameCommand, CommandFunction commandFunction, string oldNameCommand = "")
         {
             string textUpdate = "";
 
@@ -131,7 +131,7 @@ namespace CommandChoice.Model
                     textUpdate = $"{nameCommand} : {commandFunction.trigger}";
                     break;
                 case Trigger:
-                    textUpdate = $"{nameCommand} : {commandFunction.trigger}";
+                    textUpdate = oldNameCommand;
                     break;
             }
             return textUpdate;

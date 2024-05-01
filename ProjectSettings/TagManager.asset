@@ -13,6 +13,7 @@ TagManager:
   - Mail
   - Postal Box
   - Enemy
+  - Trigger
   layers:
   - Default
   - TransparentFX

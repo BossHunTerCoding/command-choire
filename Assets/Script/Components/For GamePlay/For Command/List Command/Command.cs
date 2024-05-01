@@ -30,6 +30,8 @@ namespace CommandChoice.Component
         [SerializeField] private int indexLock = 0;
         [SerializeField] private GameObject LockObject;
 
+        public TriggerComponent checkTrigger { get; private set; }
+
         void Awake()
         {
             RootContentCommand = GameObject.FindGameObjectWithTag(StaticText.RootListContentCommand);
@@ -37,6 +39,9 @@ namespace CommandChoice.Component
             scrollControl = CommandManager.transform.Find("Scroll View").GetComponent<ScrollRect>();
             verticalLayout = RootContentCommand.GetComponent<VerticalLayoutGroup>();
             contentSize = RootContentCommand.GetComponent<ContentSizeFitter>();
+            checkTrigger = GetComponent<TriggerComponent>();
+
+            if (checkTrigger != null) { isLock = true; }
         }
 
         void Start()
@@ -54,7 +59,7 @@ namespace CommandChoice.Component
                     catch (Exception) { }
                 }
             }
-            gameObject.tag = StaticText.TagCommand;
+            if (checkTrigger == null) gameObject.tag = StaticText.TagCommand;
             CommandFunction = transform.GetChild(0).GetComponent<CommandFunction>();
             image = gameObject.GetComponent<Image>();
             Parent.UpdateParentAndIndex(transform.parent, transform.GetSiblingIndex());
@@ -62,14 +67,14 @@ namespace CommandChoice.Component
             {
                 if (Type == TypeCommand.Behavior)
                 {
-                    gameObject.AddComponent<CommandBehavior>();
+                    if (gameObject.GetComponent<CommandBehavior>() == null) gameObject.AddComponent<CommandBehavior>();
                     DefaultColor = image.color;
                 }
                 else
                 {
                     if (transform.GetChild(0).GetComponent<CommandFunction>() == null)
                     {
-                        gameObject.AddComponent<CommandFunction>();
+                        if (gameObject.GetComponent<CommandFunction>() == null) gameObject.AddComponent<CommandFunction>();
                     }
                     else
                     {
@@ -84,7 +89,7 @@ namespace CommandChoice.Component
 
         void Update()
         {
-            if (isLock && transform.GetSiblingIndex() != (indexLock == 0 ? transform.GetSiblingIndex() : indexLock))
+            if (isLock && transform.GetSiblingIndex() != (indexLock == 0 ? transform.GetSiblingIndex() : indexLock) && checkTrigger == null)
             {
                 transform.SetSiblingIndex(indexLock == 0 ? transform.GetSiblingIndex() : indexLock);
             }

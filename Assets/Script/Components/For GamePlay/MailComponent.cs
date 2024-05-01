@@ -23,8 +23,9 @@ namespace CommandChoice.Component
             if (other.gameObject.CompareTag(StaticText.TagPlayer))
             {
                 PlayerManager player = other.gameObject.GetComponent<PlayerManager>();
-                player.GetMail(countMail);
+                player.UpdateMail(countMail);
                 gameObject.SetActive(false);
+                CommandManager.TriggerObjects(gameObject.tag);
             }
         }
     }

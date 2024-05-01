@@ -1,5 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using CommandChoice.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,23 @@ namespace CommandChoice.Component
 {
     public class TutorialComponent : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        [SerializeField] List<Button> CloseMenu = new();
+
+        private void Start()
         {
-            gameObject.GetComponent<Button>().onClick.AddListener(() => { print("Tutorial"); });
+            if (CloseMenu.Count > 0)
+            {
+                foreach (Button close in CloseMenu)
+                {
+                    close.onClick.AddListener(() => { Destroy(gameObject); });
+                }
+            }
+        }
+
+        public void PopUpTutorial()
+        {
+            GameObject menu = Resources.Load<GameObject>("Ui/Menu/Tutorial Board");
+            Instantiate(menu, GameObject.FindWithTag(StaticText.TagCanvas).transform);
         }
     }
 }
-
