@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 55c70d64facd1934ba8f4d0b3ad1ea53, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,11 +99,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb5d70925bc7554aa49d71870118675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 3
+  <HP>k__BackingField: 3
   <Mail>k__BackingField: 0
+  LayerStopMove:
+    serializedVersion: 2
+    m_Bits: 0
   textHP: {fileID: 0}
   textMail: {fileID: 0}
   startSpawn: {x: 19, y: 9, z: 0}
+  moveSpeed: 5
+  DataThisGame:
+    playActionCommand: 0
+    percentScore: 150
+    <MailObjects>k__BackingField: []
+    <EnemyObjects>k__BackingField: []
 --- !u!61 &5362912299351576325
 BoxCollider2D:
   m_ObjectHideFlags: 0
