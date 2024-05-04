@@ -47,7 +47,7 @@ namespace CommandChoice.Component
             }
             catch (System.Exception)
             {
-                DataGlobal.Scene = new(StaticText.PathLevelScene);
+                DataGlobal.Scene = new();
                 DataGlobal.Scene.ListLevelScene[0].DetailLevelScene.UnLockLevelScene = true;
             }
 

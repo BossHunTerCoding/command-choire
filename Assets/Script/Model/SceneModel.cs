@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CommandChoice.Model
 {
@@ -9,28 +12,37 @@ namespace CommandChoice.Model
     {
         public List<LevelSceneModel> ListLevelScene = new();
 
-        public SceneModel(string pathLevelSceneFolder)
+        public SceneModel()
         {
-            List<string> listScenes = new();
-            // Get the name of a file from a folder
-            DirectoryInfo directory = new(pathLevelSceneFolder);
-            FileInfo[] files = directory.GetFiles();
-            foreach (FileInfo file in files)
+            for (int i = 1; i <= 10; i++)
             {
-                if (file.Extension == ".unity")
-                {
-                    // Get Only Scene files Unity
-                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name);
-                    listScenes.Add(fileNameWithoutExtension);
-                }
-            }
-            // Order List By Number
-            List<string> orderListScene = listScenes.OrderBy(listScene => int.Parse(listScene.Substring(6))).ToList();
-            foreach (string scene in orderListScene)
-            {
-                LevelSceneModel levelScene = new(scene);
+                string nameScene = $"Level_{i}";
+                //Debug.Log(nameScene);
+                LevelSceneModel levelScene = new(nameScene);
                 ListLevelScene.Add(levelScene);
             }
+
+            // // Get the path to the Assets folder
+            // string assetsPath = Application.dataPath;
+
+            // // Recursively search for all .unity files
+            // var allFiles = Directory.EnumerateFiles(assetsPath, "*.unity", SearchOption.AllDirectories);
+            // // List to store scene paths
+            // List<string> scenePaths = allFiles.Where(path => Path.GetFileNameWithoutExtension(path).Contains("Level_")).ToList();
+
+            // List<string> orderListScene = scenePaths.OrderBy(listScene =>
+            // {
+            //     Match match = Regex.Match(listScene, @"Level_(\d+)"); // Extract numbers with regex
+            //     return match.Success ? int.Parse(match.Groups[1].Value) : int.MaxValue;
+            // }).ToList();
+
+            // // Order List By Number
+            // foreach (string scene in orderListScene)
+            // {
+            //     Debug.Log(Path.GetFileNameWithoutExtension(scene));
+            //     LevelSceneModel levelScene = new(Path.GetFileNameWithoutExtension(scene));
+            //     ListLevelScene.Add(levelScene);
+            // }
         }
     }
 

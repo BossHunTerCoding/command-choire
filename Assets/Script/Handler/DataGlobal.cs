@@ -12,7 +12,7 @@ namespace CommandChoice.Data
         public static float timeDeray = 1f;
         public static int HpDefault { get; private set; } = 3;
         public static int MailDefault { get; private set; } = 0;
-        public static SceneModel Scene = new(StaticText.PathLevelScene);
+        public static SceneModel Scene = new();
 
         public static void LoadSceneData(string pathJsonData)
         {
