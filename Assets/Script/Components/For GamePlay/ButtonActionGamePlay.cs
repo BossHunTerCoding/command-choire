@@ -12,7 +12,8 @@ namespace CommandChoice.Component
             Play,
             Pause,
             Reset,
-            Zoom
+            Zoom,
+            Speed
         }
 
         [SerializeField] private TypeAction Type;
@@ -56,6 +57,26 @@ namespace CommandChoice.Component
             {
                 ZoomComponent zoomComponent = gameObject.AddComponent<ZoomComponent>();
                 zoomComponent.enabled = true;
+            }
+            else if (Type == TypeAction.Speed)
+            {
+                Text textSpeed = transform.GetChild(0).GetComponent<Text>();
+                int speed = 0;
+                try
+                {
+                    speed = int.Parse(textSpeed.text);
+                }
+                catch (System.Exception)
+                {
+                    textSpeed.text = "1";
+                }
+                button.onClick.AddListener(() =>
+                {
+                    speed = int.Parse(textSpeed.text);
+                    speed++;
+                    if (speed > 3) speed = 1;
+                    textSpeed.text = speed.ToString();
+                });
             }
             else
             {

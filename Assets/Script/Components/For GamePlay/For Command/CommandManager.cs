@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using CommandChoice.Data;
 using CommandChoice.Model;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace CommandChoice.Component
@@ -25,6 +24,24 @@ namespace CommandChoice.Component
 
         void Start()
         {
+            try
+            {
+                Text TitleLevel = GameObject.Find("Title Level").GetComponent<Text>();
+                foreach (var item in DataGlobal.Scene.ListLevelScene)
+                {
+                    if (SceneManager.GetActiveScene().name == item.getNameForLoadScene())
+                    {
+                        TitleLevel.text = item.NameLevelScene;
+                        break;
+                    }
+                    else
+                    {
+                        TitleLevel.text = "Level";
+                    }
+                }
+            }
+            catch (System.Exception) { }
+
             DataThisGame = new();
             countTime.text = "";
         }
@@ -157,6 +174,11 @@ namespace CommandChoice.Component
             }
         }
 
+        public void StopActionAll()
+        {
+            StopAllCoroutines();
+        }
+
         public void ResetAction(bool stopCoroutinesOnly = false)
         {
             StopAllCoroutines();
@@ -230,7 +252,7 @@ namespace CommandChoice.Component
                         }
                     };
                 }
-                yield return new WaitForSeconds(DataGlobal.timeDeray);
+                yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 //if (item.value.name != StaticText.Loop) countTime.text = $"Count: {++TimeCount}";
                 countTime.text = $"Count: {++TimeCount}";
                 try
@@ -257,6 +279,18 @@ namespace CommandChoice.Component
                 else if (item.value.name == StaticText.MoveRight)
                 {
                     yield return player.PlayerMoveRight();
+                }
+                else if (item.value.name == StaticText.Idle)
+                {
+                    if (DataThisGame.EnemyObjects.Count > 0)
+                    {
+                        foreach (GameObject itemEnemy in DataThisGame.EnemyObjects)
+                        {
+                            DogComponent enemy = itemEnemy.GetComponent<DogComponent>();
+                            if (enemy == null) continue;
+                            StartCoroutine(enemy.Movement());
+                        }
+                    }
                 }
                 else if (item.value.name == StaticText.Loop)
                 {
@@ -296,7 +330,7 @@ namespace CommandChoice.Component
                     }
                     else continue;
                 }
-                yield return new WaitForSeconds(DataGlobal.timeDeray);
+                yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 listCommand[item.index].GetComponent<Command>().ResetAction();
             }
             //print("End Run");

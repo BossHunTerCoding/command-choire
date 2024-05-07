@@ -41,42 +41,24 @@ namespace CommandChoice.Component
             {
                 if (scene[i].getNameForLoadScene() == SceneManager.GetActiveScene().name)
                 {
-                    scene[i].DetailLevelScene.MailLevelScene = player.Mail;
-                    int boxCount = 0;
+                    int percentScore = commandManager.DataThisGame.percentScore;
+                    int boxUseCount = 0;
                     foreach (var item in commandManager.ListCommandSelected)
                     {
-                        if (item.name != StaticText.EndLoop) boxCount++;
+                        if (item.name != StaticText.EndLoop) boxUseCount++;
                     }
-                    for (int j = 0; j < scene[i].DetailLevelScene.MailLevelScene; j++)
+                    percentScore = Mathf.Clamp(percentScore, 0, 100);
+                    foreach (GameObject item in mail) { item.SetActive(false); }
+                    for (int j = 0; j < player.Mail; j++)
                     {
                         mail[j].SetActive(true);
                     }
-                    int checkLostMail = 3 - scene[i].DetailLevelScene.MailLevelScene;
-                    int percentScore = commandManager.DataThisGame.percentScore;
-                    if (checkLostMail > 0)
-                    {
-                        for (int j = 0; j < checkLostMail; j++)
-                        {
-                            percentScore -= DataGlobal.minusScoreLostMail;
-                        }
-                    }
-                    if (percentScore > 100) percentScore = 100;
-                    else if (percentScore < 0) percentScore = 0;
-
-                    if (scene[i].DetailLevelScene.ScoreLevelScene <= percentScore) newScore = true;
-
-                    foreach (GameObject item in mail) { item.SetActive(false); }
-
-                    commandText.text = boxCount.ToString();
-                    scoreText.text = $"{percentScore}%";
-                    timeText.text = commandManager.TimeCount.ToString();
-
-                    if (newScore)
-                    {
-                        scoreText.text = scene[i].DetailLevelScene.ScoreLevelScene < percentScore ? $"New Score: {scene[i].DetailLevelScene.ScoreLevelScene}% >> {percentScore}%" : $"{percentScore}";
-                        commandText.text = scene[i].DetailLevelScene.CountBoxCommand > boxCount ? $"New Count: {scene[i].DetailLevelScene.CountBoxCommand} >> {boxCount}" : $"{boxCount}";
-                        timeText.text = scene[i].DetailLevelScene.UseTime > commandManager.TimeCount ? $"New Count: {scene[i].DetailLevelScene.UseTime} >> {commandManager.TimeCount}" : $"{commandManager.TimeCount}";
-                    }
+                    int checkScoreLostMail = (DataGlobal.MailMax - player.Mail) * DataGlobal.minusScoreLostMail;
+                    percentScore -= checkScoreLostMail;
+                    newScore = percentScore > scene[i].DetailLevelScene.ScoreLevelScene;
+                    scoreText.text = newScore ? $"New Score: Form {scene[i].DetailLevelScene.ScoreLevelScene}% To {percentScore}" : $"{percentScore}";
+                    commandText.text = boxUseCount < scene[i].DetailLevelScene.CountBoxCommand && newScore ? $"New Count: Form {scene[i].DetailLevelScene.CountBoxCommand} To {boxUseCount}" : $"{boxUseCount}";
+                    timeText.text = commandManager.TimeCount < scene[i].DetailLevelScene.UseTime && newScore ? $"New Count: Form {scene[i].DetailLevelScene.UseTime} To {commandManager.TimeCount}" : $"{commandManager.TimeCount}";
 
                     if (player.Mail > 0 && player.HP > 0)
                     {
@@ -84,8 +66,8 @@ namespace CommandChoice.Component
                         {
                             scene[i].DetailLevelScene.ScoreLevelScene = percentScore;
                             scene[i].DetailLevelScene.MailLevelScene = player.Mail;
-                            scene[i].DetailLevelScene.UseTime = commandManager.TimeCount;
                         }
+                        if (commandManager.TimeCount < scene[i].DetailLevelScene.UseTime) scene[i].DetailLevelScene.UseTime = commandManager.TimeCount;
                         try
                         {
                             scene[i + 1].DetailLevelScene.UnLockLevelScene = true;

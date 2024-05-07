@@ -15,10 +15,11 @@ public class DogComponent : MonoBehaviour
     Vector2 startPosition;
     [SerializeField] int damage = 1;
     [SerializeField] float smoothMovement = 3f;
-    DataGamePlay dataThisGame = new();
 
     void Start()
     {
+        indexMovement = Random.Range(0, dirMovement.Count - 1);
+        transform.position = new(dirMovement[indexMovement].transform.position.x, dirMovement[indexMovement].transform.position.y, transform.position.z);
         startPosition = transform.position;
         stepFootWalk = StartCoroutine(ShowNavigatorFootWalk());
     }
@@ -47,6 +48,7 @@ public class DogComponent : MonoBehaviour
 
     public IEnumerator Movement()
     {
+        indexMovement++;
         if (indexMovement >= dirMovement.Count) indexMovement = 0;
         Vector3 targetMove = new(dirMovement[indexMovement].transform.position.x, dirMovement[indexMovement].transform.position.y, transform.position.z);
         while (transform.position != targetMove)
@@ -54,7 +56,6 @@ public class DogComponent : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetMove, smoothMovement * Time.deltaTime);
             yield return null;
         }
-        indexMovement++;
     }
 
     public void ResetGame()
@@ -65,7 +66,7 @@ public class DogComponent : MonoBehaviour
         stepFootWalk = StartCoroutine(ShowNavigatorFootWalk());
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag(StaticText.TagPlayer))
         {

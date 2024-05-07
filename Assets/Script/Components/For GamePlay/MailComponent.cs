@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CommandChoice.Model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +8,15 @@ namespace CommandChoice.Component
     public class MailComponent : MonoBehaviour
     {
         [SerializeField] int countMail = 0;
+        [SerializeField] List<Transform> RandomSpawns;
 
         void Start()
         {
             transform.Find("Canvas").GetComponentInChildren<Text>().text = countMail.ToString();
+            if (RandomSpawns.Count > 0)
+            {
+                transform.position = RandomSpawns[Random.Range(0, RandomSpawns.Count - 1)].position;
+            }
         }
 
         public void ResetGame()

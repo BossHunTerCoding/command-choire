@@ -8,7 +8,7 @@ namespace CommandChoice.Data
     public class DataGamePlay
     {
         public bool playActionCommand = false;
-        public int percentScore = 150;
+        public int percentScore = DataGlobal.ScoreDefault;
         [field: SerializeField] public List<GameObject> MailObjects { get; private set; } = new();
         [field: SerializeField] public List<GameObject> EnemyObjects { get; private set; } = new();
 

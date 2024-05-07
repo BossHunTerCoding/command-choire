@@ -15,52 +15,54 @@ namespace CommandChoice.Component
         [SerializeField] float zoomSmooth = 8f;
         [SerializeField] float minZoom = 3f;
         [SerializeField] float maxZoom = 6f;
-        [SerializeField] float smoothTime = 0.25f;
-        Vector3 Velocity;
-        [SerializeField] Vector3 vectorPosition;
-        float? maxTop = null;
-        float? maxBottom = null;
-        float? maxLeft = null;
-        float? maxRight = null;
+        [SerializeField] bool finishZoom;
+        [SerializeField] private Vector2 touchPosition0, touchPosition1;
+        [SerializeField] private float previousDistance;
 
         void Awake()
         {
             ZoomActive = false;
-            Camera = GameObject.FindGameObjectWithTag(StaticText.TagCamera).GetComponent<Camera>();
+            Camera = Camera.main;
             button = GetComponent<Button>();
             image = transform.GetChild(0).GetComponent<Image>();
         }
 
         void Start()
         {
-            foreach (GameObject item in FindObjectsOfType<GameObject>())
-            {
-                if (item.layer == LayerMask.NameToLayer("Wall"))
-                {
-                    maxRight ??= item.transform.position.x;
-                    maxLeft ??= item.transform.position.x;
-                    maxBottom ??= item.transform.position.y;
-                    maxTop ??= item.transform.position.y;
-                    if (item.transform.position.x > maxRight) maxRight = item.transform.position.x;
-                    if (item.transform.position.x < maxLeft) maxLeft = item.transform.position.x;
-                    if (item.transform.position.y > maxTop) maxTop = item.transform.position.y;
-                    if (item.transform.position.y < maxBottom) maxBottom = item.transform.position.y;
-                }
-            }
             button.onClick.AddListener(() => OnClickActiveZoom());
         }
 
         void Update()
         {
+            if (Input.GetMouseButton(3)) { }
             if (ZoomActive)
             {
-                vectorPosition = new(((maxLeft ?? 0 + maxRight ?? 0) / 2) + maxLeft / 2 ?? 0, ((maxBottom ?? 0 + maxTop ?? 0) / 2) + maxBottom - 2f ?? 0, Camera.transform.position.z);
-                if (Camera.orthographicSize <= maxZoom) Camera.orthographicSize += Time.deltaTime * zoomSmooth;
-                Camera.transform.position = Vector3.SmoothDamp(Camera.transform.position, vectorPosition, ref Velocity, smoothTime);
+                if (Camera.orthographicSize <= maxZoom && !finishZoom)
+                {
+                    Camera.orthographicSize += Time.deltaTime * zoomSmooth;
+                };
+                if (Camera.orthographicSize > maxZoom) { finishZoom = true; }
+                // if (Input.touchCount == 2 && finishZoom && Camera.GetComponent<CameraManager>().onScreen)
+                // {
+                //     touchPosition0 = Input.GetTouch(0).deltaPosition;
+                //     touchPosition1 = Input.GetTouch(1).deltaPosition;
+                //     float currentDistance = Vector2.Distance(touchPosition0, touchPosition1);
+                //     float zoomFactor = currentDistance - previousDistance;
+
+                //     // Adjust camera based on zoom direction and sensitivity
+                //     Camera.orthographicSize += zoomFactor * (zoomSmooth / 2); // Adjust sensitivity as needed
+
+                //     // Implement zoom limits here if desired
+                //     Camera.orthographicSize = Mathf.Clamp(Camera.orthographicSize, minZoom, maxZoom);
+
+                //     previousDistance = currentDistance;
+                // }
             }
             else if (!ZoomActive)
             {
-                if (Camera.orthographicSize > minZoom) Camera.orthographicSize -= Time.deltaTime * zoomSmooth;
+                if (Camera.orthographicSize > minZoom) { Camera.orthographicSize -= Time.deltaTime * zoomSmooth; finishZoom = false; }
+                touchPosition0 = Vector2.zero;
+                touchPosition1 = Vector2.zero;
             }
         }
 

@@ -20,13 +20,13 @@ namespace CommandChoice.Component
 
         void Awake()
         {
-            textHP = GameObject.FindGameObjectWithTag(StaticText.TagHP).transform.GetComponentInChildren<Text>();
-            textMail = GameObject.Find(StaticText.UiMail).transform.GetComponentInChildren<Text>();
             DataThisGame = new();
         }
 
         void Start()
         {
+            textHP = GameObject.FindGameObjectWithTag(StaticText.TagHP).transform.GetComponentInChildren<Text>();
+            textMail = GameObject.Find(StaticText.UiMail).transform.GetComponentInChildren<Text>();
             UpdateText();
             startSpawn = transform.position;
         }
@@ -113,7 +113,7 @@ namespace CommandChoice.Component
 
         void GameOver()
         {
-            StopAllCoroutines();
+            GameObject.FindWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>().StopActionAll();
             ScoreBoardComponent gameObject = Instantiate(Resources.Load<ScoreBoardComponent>("Ui/Menu/Score Board"), GameObject.FindWithTag("Canvas").transform);
             gameObject.GetData();
         }
