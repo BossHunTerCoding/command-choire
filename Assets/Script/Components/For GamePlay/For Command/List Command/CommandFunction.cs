@@ -1,4 +1,5 @@
 using CommandChoice.Model;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,8 +56,8 @@ namespace CommandChoice.Component
                 });
 
                 Destroy(gameObject.GetComponent<Command>());
-                StartConfigCommandFunction(commandComponent);
                 transform.SetParent(commandComponent.transform);
+                StartConfigCommandFunction(commandComponent);
                 UpdateColor(RootContentCommand.transform);
             }
         }
@@ -88,6 +89,7 @@ namespace CommandChoice.Component
         {
             if (command.gameObject.name == StaticText.Loop) CommandManager.ConfigCommand(command, this);
             else if (command.gameObject.name == StaticText.If) gameObject.GetComponent<IfCommand>().GenerateMenu();
+            else if (command.gameObject.name == StaticText.Trigger) transform.parent.AddComponent<TriggerComponent>().GenerateMenu();
         }
 
         public void UpdateColor(Transform transform, bool revers = false)

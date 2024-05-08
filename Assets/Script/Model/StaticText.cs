@@ -35,6 +35,7 @@ namespace CommandChoice.Model
         public const string PathPrefabPauseGame = "Ui/Menu/PausePanels";
         public const string PathPrefabConfigCommandForFunction = "Ui/Command/Config Command Function";
         public const string PathPrefabBlockCommandForFunction = "Ui/Command/Block Command Function";
+        public const string PathPrefabMenuListCommand = "Ui/Command/Menu List Commands";
         public const string PathPrefabCommand = "Ui/Button/Command";
         public const string PathPrefabCommandSpecial = "Ui/Button/Command Special";
         public const string RootListContentCommand = "List Content Command";

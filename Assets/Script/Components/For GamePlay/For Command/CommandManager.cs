@@ -332,6 +332,25 @@ namespace CommandChoice.Component
                 }
                 yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 listCommand[item.index].GetComponent<Command>().ResetAction();
+                if (triggerEvent != null)
+                {
+                    GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Trigger");
+                    string trigger = triggerEvent;
+                    triggerEvent = null;
+                    if (gameObjects.Length > 0)
+                    {
+                        foreach (GameObject gameObject in gameObjects)
+                        {
+                            if (gameObject.GetComponent<TriggerComponent>().tagTrigger == trigger)
+                            {
+                                ListCommandSelected.Clear();
+                                List<Transform> transformsCommand = new() { gameObject.transform };
+                                yield return RunCommand(LoopCheckCommand(transformsCommand, false), TimeCount);
+                            }
+                            else continue;
+                        }
+                    };
+                }
             }
             //print("End Run");
         }

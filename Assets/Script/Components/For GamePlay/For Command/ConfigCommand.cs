@@ -20,10 +20,12 @@ namespace CommandChoice.Component
         void Awake()
         {
             commandManager = GameObject.FindGameObjectWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
+            configValue.contentType = InputField.ContentType.IntegerNumber;
         }
 
         void Start()
         {
+            configValue.text = commandFunction.countDefault > 0 ? commandFunction.countDefault.ToString() : 0.ToString();
             buttonConfirm.onClick.AddListener(() =>
             {
                 int valueCount;
@@ -40,7 +42,6 @@ namespace CommandChoice.Component
                 commandFunction.countDefault = valueCount;
                 commandFunction.countTime = valueCount;
 
-                textConfig.text = StaticText.CommandDisplay(commandConfig.gameObject.name, commandFunction);
                 Destroy(gameObject);
             });
 
@@ -60,6 +61,11 @@ namespace CommandChoice.Component
             {
                 configValue.textComponent.color = Color.black;
             });
+        }
+
+        void OnDestroy()
+        {
+            if (textConfig != null) textConfig.text = StaticText.CommandDisplay(commandConfig.gameObject.name, commandFunction);
         }
 
         public void GetCommand(Command command, CommandFunction commandFunction)

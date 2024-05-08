@@ -7,26 +7,48 @@ using UnityEngine.UI;
 
 public class TriggerComponent : MonoBehaviour
 {
-    enum Type { Enemy, Mail }
-
-    [SerializeField] Type typeTrigger;
+    public enum TypeTrigger { Enemy, Mail }
+    [field: SerializeField] public bool canClick { get; private set; } = true;
+    public TypeTrigger typeTrigger;
+    [SerializeField] GameObject menuListCommand;
     public string tagTrigger { get; private set; }
 
     void Awake()
     {
-        gameObject.tag = "Trigger";
+        menuListCommand = Resources.Load<GameObject>(StaticText.PathPrefabMenuListCommand);
     }
 
     void Start()
     {
-        Text text = gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
-        switch (typeTrigger)
+        gameObject.tag = "Trigger";
+        UpdateTrigger();
+        if (canClick)
         {
-            case Type.Enemy:
+            transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => GenerateMenu());
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.SetParent(GameObject.FindWithTag(StaticText.RootListContentCommand).transform);
+        transform.SetAsLastSibling();
+    }
+
+    public void UpdateTrigger(string typeTrigger = null)
+    {
+        if (typeTrigger != null)
+        {
+            this.typeTrigger = (TypeTrigger)System.Enum.Parse(typeof(TypeTrigger), typeTrigger);
+        }
+        Text text = gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
+        switch (this.typeTrigger)
+        {
+            case TypeTrigger.Enemy:
                 text.text = $"Trigger {StaticText.TagEnemy}";
                 tagTrigger = StaticText.TagEnemy;
                 break;
-            case Type.Mail:
+            case TypeTrigger.Mail:
                 text.text = $"Trigger {StaticText.TagMail}";
                 tagTrigger = StaticText.TagMail;
                 break;
@@ -36,9 +58,11 @@ public class TriggerComponent : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GenerateMenu()
     {
-        transform.SetAsLastSibling();
+        Transform transform = GameObject.FindGameObjectWithTag(StaticText.TagCanvas).transform;
+        SelectListCommand commandObject = Instantiate(menuListCommand, transform).GetComponent<SelectListCommand>();
+        commandObject.typeListCommand = SelectTypeListCommand.Trigger;
+        commandObject.updateCommand(gameObject);
     }
 }

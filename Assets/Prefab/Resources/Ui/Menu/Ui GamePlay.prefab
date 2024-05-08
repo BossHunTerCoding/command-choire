@@ -1091,10 +1091,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: c73604b0c43da8c4ab5d44483aee9c53, type: 3}
-    m_FontSize: 31
+    m_FontSize: 42
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 43
     m_Alignment: 4
     m_AlignByGeometry: 0
