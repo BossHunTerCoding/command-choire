@@ -19,6 +19,12 @@ namespace CommandChoice.Component
         void Start()
         {
             ColorBackground.color = CommandManager.ListCommandModel.listColorCommands[0];
+            GetComponent<Button>().onClick.AddListener(() =>
+            {
+                SelectListCommand selectListObject = Instantiate(Resources.Load<GameObject>(StaticText.PathPrefabMenuListCommand), GameObject.FindGameObjectWithTag(StaticText.TagCanvas).transform).GetComponent<SelectListCommand>();
+                selectListObject.typeListCommand = SelectTypeListCommand.Behavior;
+                selectListObject.updateCommand(gameObject);
+            });
         }
     }
 }

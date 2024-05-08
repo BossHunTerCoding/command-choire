@@ -4129,6 +4129,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 648760063}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 559579450}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 1210202224}
     - target: {fileID: 5300234184136197320, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13546799
@@ -6603,6 +6619,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 193970208}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 1818476621}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 1792031373}
     - target: {fileID: 5300234184136197320, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13546799
@@ -7183,6 +7215,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 437709987}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 1886040905}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 483731662}
     - target: {fileID: 5300234184136197320, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13546799
@@ -7261,6 +7309,22 @@ PrefabInstance:
       propertyPath: countMail
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 1501382888}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 1372673783}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 361983835}
     - target: {fileID: 1298830051012662811, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1668.54
@@ -8115,6 +8179,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 1426712592}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 76260585}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 916988674}
     - target: {fileID: 5300234184136197320, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13546799
@@ -8871,6 +8951,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 1947165661}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 624977030}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 951660337}
     - target: {fileID: 5300234184136197320, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13546799
@@ -10051,6 +10147,22 @@ PrefabInstance:
       propertyPath: countMail
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 1742509619}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 403673130}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 1196666993}
     - target: {fileID: 1298830051012662811, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1678.53
@@ -10367,6 +10479,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 1518144958}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 704360361}
+    - target: {fileID: 1953717762092387355, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 558259111}
     - target: {fileID: 5300234184136197320, guid: 62ae5ae6da5b1dd48a187e13ac3b146e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13546799
@@ -10667,6 +10795,22 @@ PrefabInstance:
       propertyPath: countMail
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 584950371}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 1386593620}
+    - target: {fileID: 523899797122788271, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
+      propertyPath: RandomSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 1698544290}
     - target: {fileID: 1298830051012662811, guid: 003135579db0d324fb18b023ec12d59c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1675.539

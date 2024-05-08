@@ -18,7 +18,6 @@ public class MudPitComponent : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        print(other.gameObject.name);
         if (other.gameObject.CompareTag(StaticText.TagPlayer))
         {
             CommandManager commandManager = GameObject.FindGameObjectWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();

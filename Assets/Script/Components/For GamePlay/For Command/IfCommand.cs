@@ -13,7 +13,12 @@ public class IfCommand : MonoBehaviour
     [field: SerializeField] public GameObject command { get; private set; }
     [SerializeField] GameObject menuListCommand;
     Button clickCommand;
-    // Start is called before the first frame update
+    
+    void Awake()
+    {
+        menuListCommand = Resources.Load<GameObject>(StaticText.PathPrefabMenuListCommand);
+    }
+
     void Start()
     {
         clickCommand = addCommand.GetComponent<Button>();
@@ -26,7 +31,8 @@ public class IfCommand : MonoBehaviour
     public void GenerateMenu()
     {
         Transform transform = GameObject.FindGameObjectWithTag(StaticText.TagCanvas).transform;
-        GameObject commandObject = Instantiate(menuListCommand, transform);
-        commandObject.GetComponent<SelectListCommand2>().updateCommand(command);
+        SelectListCommand commandObject = Instantiate(menuListCommand, transform).GetComponent<SelectListCommand>();
+        commandObject.typeListCommand = SelectTypeListCommand.If;
+        commandObject.updateCommand(command);
     }
 }
