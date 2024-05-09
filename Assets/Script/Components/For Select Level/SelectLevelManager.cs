@@ -14,6 +14,7 @@ namespace CommandChoice.Component
 
         private void Start()
         {
+            if (MusicManagerComponent.instance != null) StartCoroutine(MusicManagerComponent.instance.ChangeSoundBackground(MusicManagerComponent.instance.MusicBackGround[0]));
             InitializedData(GenerateSelectLevel());
         }
 

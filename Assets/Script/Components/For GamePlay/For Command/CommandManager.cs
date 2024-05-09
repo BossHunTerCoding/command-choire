@@ -194,6 +194,7 @@ namespace CommandChoice.Component
                 command1.ResetAction();
                 CommandFunction command2 = command1.CommandFunction;
                 if (command2 == null) continue;
+                command2.countIf = false;
                 command2.UpdateTextCommand(item.name, true);
             }
             GameObject.FindGameObjectWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>().ResetGame();
@@ -253,8 +254,16 @@ namespace CommandChoice.Component
                     };
                 }
                 yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
-                //if (item.value.name != StaticText.Loop) countTime.text = $"Count: {++TimeCount}";
-                countTime.text = $"Count: {++TimeCount}";
+                if (item.value.name == StaticText.Loop)
+                {
+                    Command command = item.value.GetComponent<Command>();
+                    if (!command.CommandFunction.countIf) countTime.text = $"Count: {++TimeCount}";
+                    if (!command.CommandFunction.countIf) item.value.GetComponent<Command>().CommandFunction.countIf = true;
+                }
+                else
+                {
+                    countTime.text = $"Count: {++TimeCount}";
+                }
                 try
                 {
                     listCommand[item.index - 1].GetComponent<Command>().ResetAction();
@@ -330,6 +339,17 @@ namespace CommandChoice.Component
                     }
                     else continue;
                 }
+                else if (item.value.name == StaticText.Warp)
+                {
+                    if (player.Collider2D != null)
+                    {
+                        PortalWarpComponent portalWarp = player.Collider2D.GetComponent<PortalWarpComponent>();
+                        if (portalWarp != null)
+                        {
+                            player.transform.position = new(portalWarp.LinkPortal.transform.position.x, portalWarp.LinkPortal.transform.position.y, player.transform.position.z);
+                        }
+                    }
+                }
                 yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 listCommand[item.index].GetComponent<Command>().ResetAction();
                 if (triggerEvent != null)
@@ -361,6 +381,7 @@ namespace CommandChoice.Component
             {
                 if (item.name == StaticText.Loop)
                 {
+                    item.GetComponent<Command>().CommandFunction.countIf = false;
                     if (item.GetComponent<Command>().CommandFunction.countTime <= 0)
                     {
                         CommandFunction checkCommandLoop = item.GetComponent<Command>().CommandFunction;

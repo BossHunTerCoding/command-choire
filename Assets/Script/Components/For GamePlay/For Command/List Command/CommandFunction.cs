@@ -11,7 +11,7 @@ namespace CommandChoice.Component
         public GameObject RootContentCommand { get; private set; }
         [SerializeField] private GameObject commandFunction;
         public GameObject RootListViewCommand { get; private set; }
-
+        public bool countIf = false;
         public int countDefault;
         public int countTime;
 

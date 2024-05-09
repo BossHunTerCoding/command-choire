@@ -13,7 +13,8 @@ namespace CommandChoice.Component
             Pause,
             Reset,
             Zoom,
-            Speed
+            Speed,
+            Setting
         }
 
         [SerializeField] private TypeAction Type;
@@ -26,8 +27,14 @@ namespace CommandChoice.Component
         private void Awake()
         {
             button = gameObject.GetComponent<Button>();
-            commandManager = GameObject.FindGameObjectWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
-            listContentCommand = GameObject.FindGameObjectWithTag(StaticText.RootListContentCommand).transform;
+            try
+            {
+                commandManager = GameObject.FindGameObjectWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
+                listContentCommand = GameObject.FindGameObjectWithTag(StaticText.RootListContentCommand).transform;
+            }
+            catch (System.Exception)
+            {
+            }
         }
 
         private void Start()
@@ -57,6 +64,13 @@ namespace CommandChoice.Component
             {
                 ZoomComponent zoomComponent = gameObject.AddComponent<ZoomComponent>();
                 zoomComponent.enabled = true;
+            }
+            else if (Type == TypeAction.Setting)
+            {
+                button.onClick.AddListener(() =>
+                {
+                    Instantiate(Resources.Load<GameObject>("Ui/Menu/Setting"), GameObject.FindWithTag(StaticText.TagCanvas).transform);
+                });
             }
             else if (Type == TypeAction.Speed)
             {

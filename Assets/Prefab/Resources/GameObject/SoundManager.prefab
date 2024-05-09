@@ -44,3 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0baab1e8d0077e1459672604467d06ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MusicBackGround:
+  - {fileID: 8300000, guid: aa1da599e8e966a4f8f3ff411b63d82a, type: 3}
+  - {fileID: 8300000, guid: 682b84015bde90e4b90856eec5de24fb, type: 3}
+  - {fileID: 8300000, guid: 682b84015bde90e4b90856eec5de24fb, type: 3}
+  - {fileID: 8300000, guid: ca1a7535222bae14da83a3b58ca27876, type: 3}
+  - {fileID: 8300000, guid: 9b0d37d83b287fb4697a6102875e56f6, type: 3}
+  - {fileID: 8300000, guid: 864bb71d5c5e459459cae4f9000fd3e4, type: 3}
+  - {fileID: 8300000, guid: 74cb3a2c06a435641a9c25300cb9fd6b, type: 3}
+  - {fileID: 8300000, guid: 1dc315c25d6029c4b92505302a5fd66f, type: 3}
+  - {fileID: 8300000, guid: 41163ab17cf1514448b1a9c495441e92, type: 3}
+  - {fileID: 8300000, guid: 752bc8699f2b6614c931e2a187bddec4, type: 3}
+  - {fileID: 8300000, guid: 19ea6cfeea5a37143ac73e8caeaaeab8, type: 3}
+  audioSource: {fileID: 0}

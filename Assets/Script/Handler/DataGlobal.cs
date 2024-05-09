@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using CommandChoice.Model;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace CommandChoice.Data
 {
     class DataGlobal
     {
+        public static SettingGame settingGame = new SettingGame();
         public static int minusScoreBoxCommand = 2;
         public static int minusScoreLostMail = 30;
         public static float timeDeray = 1f;
@@ -20,5 +22,16 @@ namespace CommandChoice.Data
         {
             Scene = JsonUtility.FromJson<SceneModel>(pathJsonData);
         }
+    }
+
+    [Serializable]
+    class SettingGame
+    {
+        public bool muteSoundBackground = false;
+        public float volumeSoundBackground = 1f;
+        public bool muteSoundGame = false;
+        public float volumeSoundGame = 1f;
+        public float multiplyPositiveSoundBackground = 0.25f;
+        public float multiplyMinusSoundBackground = 0.75f;
     }
 }

@@ -56,10 +56,9 @@ namespace CommandChoice.Component
                     int checkScoreLostMail = (DataGlobal.MailMax - player.Mail) * DataGlobal.minusScoreLostMail;
                     percentScore -= checkScoreLostMail;
                     newScore = percentScore > scene[i].DetailLevelScene.ScoreLevelScene;
-                    scoreText.text = newScore ? $"New Score: Form {scene[i].DetailLevelScene.ScoreLevelScene}% To {percentScore}" : $"{percentScore}";
-                    commandText.text = boxUseCount < scene[i].DetailLevelScene.CountBoxCommand && newScore ? $"New Count: Form {scene[i].DetailLevelScene.CountBoxCommand} To {boxUseCount}" : $"{boxUseCount}";
-                    timeText.text = commandManager.TimeCount < scene[i].DetailLevelScene.UseTime && newScore ? $"New Count: Form {scene[i].DetailLevelScene.UseTime} To {commandManager.TimeCount}" : $"{commandManager.TimeCount}";
-
+                    scoreText.text = $"{percentScore}";
+                    commandText.text = $"{boxUseCount}";
+                    timeText.text = $"{commandManager.TimeCount}";
                     if (player.Mail > 0 && player.HP > 0)
                     {
                         if (newScore)

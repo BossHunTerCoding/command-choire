@@ -230,7 +230,7 @@ namespace CommandChoice.Component
                         dropCommandObject.Parent.UpdateParent(transform.parent);
                         nearBottomEdge = true;
                     }
-                    if ((nearTopEdge && nearBottomEdge) || (!nearTopEdge && !nearBottomEdge)) dropCommandObject.Parent.UpdateParentAndIndex(transform, 1);
+                    if (((nearTopEdge && nearBottomEdge) || (!nearTopEdge && !nearBottomEdge)) && gameObject.name != StaticText.Warp && gameObject.name != StaticText.SkipTo) dropCommandObject.Parent.UpdateParentAndIndex(transform, 1);
                 }
                 else
                 {

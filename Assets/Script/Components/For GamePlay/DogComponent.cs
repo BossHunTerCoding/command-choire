@@ -15,6 +15,12 @@ public class DogComponent : MonoBehaviour
     Vector2 startPosition;
     [SerializeField] int damage = 1;
     [SerializeField] float smoothMovement = 3f;
+    [SerializeField] AudioSource audioSource;
+
+    void Awake()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -72,8 +78,9 @@ public class DogComponent : MonoBehaviour
         {
             PlayerManager player = other.gameObject.GetComponent<PlayerManager>();
             damage = damage > 0 ? damage * -1 : damage;
-            player.UpdateHP(damage);
+            //MusicManagerComponent.PlaySoundTakeDamage(audioSource, player.HP <= 0);
             player.UpdateMail(damage);
+            player.UpdateHP(damage);
             CommandManager.TriggerObjects(gameObject.tag);
         }
     }

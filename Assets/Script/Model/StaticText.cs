@@ -16,6 +16,7 @@ namespace CommandChoice.Model
         public const string Else = "Else";
         public const string Loop = "Loop";
         public const string EndLoop = "End Loop";
+        public const string Warp = "Warp";
         public const string SkipTo = "Skip To";
         public const string Trigger = "Trigger";
         public const string ObjectChild = "Object Child";
@@ -28,6 +29,7 @@ namespace CommandChoice.Model
         public const string Untagged = "Untagged";
         public const string TagCanvas = "Canvas";
         public const string TagPlayer = "Player";
+        public const string TagMusicBackGround = "MusicBackGround";
         public const string TagCamera = "MainCamera";
         public const string PathLevelScene = "Assets/Scene/Level";
         public const string PathImgMinimize = "Icon/minimize";
@@ -61,7 +63,7 @@ namespace CommandChoice.Model
 
         public static bool CheckCommandFunction(string command)
         {
-            List<string> listCommand = new() { Break, Count, If, Else, Loop, SkipTo, Trigger };
+            List<string> listCommand = new() { Break, Count, If, Else, Loop, SkipTo, Trigger, Warp };
             foreach (string item in listCommand)
             {
                 if (command == item) return true;
@@ -132,6 +134,9 @@ namespace CommandChoice.Model
                     textUpdate = $"{nameCommand} : {commandFunction.trigger}";
                     break;
                 case Trigger:
+                    textUpdate = oldNameCommand;
+                    break;
+                case Warp:
                     textUpdate = oldNameCommand;
                     break;
             }

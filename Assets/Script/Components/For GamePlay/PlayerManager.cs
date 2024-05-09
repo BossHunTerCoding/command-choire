@@ -2,6 +2,7 @@ using System.Collections;
 using CommandChoice.Data;
 using CommandChoice.Model;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace CommandChoice.Component
@@ -17,10 +18,24 @@ namespace CommandChoice.Component
         [SerializeField] private Vector3 startSpawn;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] DataGamePlay DataThisGame;
+        AudioSource audioSource;
+        int indexMusicSource;
+
+        public Collider2D Collider2D { get; private set; }
 
         void Awake()
         {
+            try
+            {
+                indexMusicSource = int.Parse(SceneManager.GetActiveScene().name.Substring(6));
+            }
+            catch (System.Exception)
+            {
+                indexMusicSource = 0;
+            }
+
             DataThisGame = new();
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
 
         void Start()
@@ -29,6 +44,7 @@ namespace CommandChoice.Component
             textMail = GameObject.Find(StaticText.UiMail).transform.GetComponentInChildren<Text>();
             UpdateText();
             startSpawn = transform.position;
+            if (MusicManagerComponent.instance != null) StartCoroutine(MusicManagerComponent.instance.ChangeSoundBackground(MusicManagerComponent.instance.MusicBackGround[indexMusicSource]));
         }
 
         public void ResetGame()
@@ -81,6 +97,9 @@ namespace CommandChoice.Component
 
             if (!Physics2D.OverlapCircle(newMovement, 0.2f, LayerStopMove))
             {
+                // audioSource.clip = Resources.Load<AudioClip>("walk");
+                // audioSource.volume = DataGlobal.settingGame.volumeSoundGame;
+                // audioSource.Play();
                 Vector3 targetMovement = newMovement;
                 while (transform.position != targetMovement)
                 {
@@ -118,9 +137,14 @@ namespace CommandChoice.Component
             gameObject.GetData();
         }
 
-        // void OnTriggerEnter2D(Collider2D other)
-        // {
-        //     print(other.gameObject.name);
-        // }
+        void OnTriggerStay2D(Collider2D other)
+        {
+            Collider2D = other;
+        }
+
+        void OnTriggerExit2D(Collider2D other)
+        {
+            Collider2D = null;
+        }
     }
 }
