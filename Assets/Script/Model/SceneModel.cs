@@ -11,6 +11,7 @@ namespace CommandChoice.Model
     public class SceneModel
     {
         public List<LevelSceneModel> ListLevelScene = new();
+        internal float volumeSoundBackground;
 
         public SceneModel()
         {

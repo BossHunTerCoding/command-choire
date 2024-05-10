@@ -27,11 +27,30 @@ namespace CommandChoice.Data
     [Serializable]
     class SettingGame
     {
-        public bool muteSoundBackground = false;
-        public float volumeSoundBackground = 1f;
-        public bool muteSoundGame = false;
-        public float volumeSoundGame = 1f;
+        //public bool muteSoundBackground = false;
+        public float volumeSoundBackground = 0.3f;
+        //public bool muteSoundGame = false;
+        public float volumeSoundGame = 0.3f;
+        public float SensitiveCam = 5f;
         public float multiplyPositiveSoundBackground = 0.25f;
         public float multiplyMinusSoundBackground = 0.75f;
+
+        public SettingGame()
+        {
+            try
+            {
+                // Load Json data file
+                var pathJson = Application.persistentDataPath + "/SettingGameData.json";
+                var JsonData = System.IO.File.ReadAllText(pathJson);
+                var loadedSettings = JsonUtility.FromJson<SettingGame>(JsonData);
+
+                volumeSoundBackground = loadedSettings.volumeSoundBackground;
+                volumeSoundGame = loadedSettings.volumeSoundGame;
+                SensitiveCam = loadedSettings.SensitiveCam;
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

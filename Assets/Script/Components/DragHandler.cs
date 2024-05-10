@@ -18,12 +18,13 @@ public class DragHandler : MonoBehaviour
     {
         try
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(uiElementRectTransform, Input.mousePosition) && Input.GetTouch(0).deltaPosition != Vector2.zero && zoomComponent.ZoomActive)
+            if (RectTransformUtility.RectangleContainsScreenPoint(uiElementRectTransform, Input.mousePosition) && zoomComponent.ZoomActive)
             {
                 mainCamera.onScreen = true;
-                mainCamera.OnDrag = true;
             }
             else { mainCamera.onScreen = false; mainCamera.OnDrag = false; }
+            if (SystemInfo.deviceType == DeviceType.Desktop ? Input.GetMouseButton(0) : Input.GetTouch(0).deltaPosition != Vector2.zero) mainCamera.OnDrag = true;
+            else mainCamera.OnDrag = false;
         }
         catch (System.Exception)
         {

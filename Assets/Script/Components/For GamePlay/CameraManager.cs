@@ -15,7 +15,8 @@ namespace CommandChoice.Component
         [SerializeField] Camera mainCamera;
         public bool OnDrag;
         public bool onScreen;
-        [SerializeField] Vector2 inputPosition;
+        [SerializeField] Vector3 inputPosition;
+        [SerializeField] private Vector3 previousMousePosition;
         [SerializeField] SpriteRenderer WorldBounds;
         [SerializeField] float hight;
         [SerializeField] float width;
@@ -47,9 +48,13 @@ namespace CommandChoice.Component
                 }
                 else
                 {
-                    if ((Input.GetTouch(0).deltaPosition != Vector2.zero || Input.GetMouseButton(0)) && onScreen)
+                    if (onScreen && OnDrag)
                     {
                         transform.position = Vector3.SmoothDamp(transform.position, CameraGetBounds(zoomComponent.ZoomActive), ref velocity, smoothTime);
+                    }
+                    else
+                    {
+                        transform.position = Vector3.SmoothDamp(transform.position, CameraGetBounds(), ref velocity, smoothTime);
                     }
                 }
             }
@@ -70,7 +75,6 @@ namespace CommandChoice.Component
                 new(boundsMin.x, boundsMin.y, 0f),
                 new(boundsExtents.x, boundsExtents.y, 0f)
             );
-            transform.position = Vector3.SmoothDamp(transform.position, CameraGetBounds(), ref velocity, smoothTime);
         }
 
         private Vector3 CameraGetBounds(bool? unLockPlayer = null)
@@ -80,13 +84,28 @@ namespace CommandChoice.Component
             {
                 if (unLockPlayer ?? false)
                 {
-                    inputPosition = Input.GetTouch(0).deltaPosition;
-                    targetPosition = new(targetPosition.x += inputPosition.x, targetPosition.y += inputPosition.y);
+                    if (SystemInfo.deviceType == DeviceType.Desktop) // Check if left mouse button is held
+                    {
+                        Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        inputPosition = (currentMousePosition - previousMousePosition) * DataGlobal.settingGame.SensitiveCam;
+                        targetPosition = new Vector3(targetPosition.x + inputPosition.x, targetPosition.y + inputPosition.y, targetPosition.z);
+                        previousMousePosition = currentMousePosition;  // Update for next frame
+                    }
+                    else if (SystemInfo.deviceType == DeviceType.Handheld)
+                    {
+                        inputPosition = Input.GetTouch(0).deltaPosition * DataGlobal.settingGame.SensitiveCam;
+                        targetPosition = new(targetPosition.x += inputPosition.x, targetPosition.y += inputPosition.y);
+                    }
                 }
                 else
                 {
                     targetPosition = player.transform.position + offset;
                 }
+            }
+            else
+            {
+                inputPosition = Vector3.zero;
+                targetPosition = new(targetPosition.x += inputPosition.x, targetPosition.y += inputPosition.y);
             }
             return new(
                 Mathf.Clamp(targetPosition.x, CameraBound.min.x, CameraBound.max.x),
