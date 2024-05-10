@@ -14,7 +14,8 @@ namespace CommandChoice.Component
             Reset,
             Zoom,
             Speed,
-            Setting
+            Setting,
+            Jump
         }
 
         [SerializeField] private TypeAction Type;
@@ -92,12 +93,34 @@ namespace CommandChoice.Component
                     textSpeed.text = speed.ToString();
                 });
             }
+            else if (Type == TypeAction.Jump)
+            {
+                button.onClick.AddListener(() =>
+                {
+                    if (commandManager.DataThisGame.playActionCommand && !commandManager.DataThisGame.waitCoolDownJump)
+                    {
+                        commandManager.DataThisGame.waitCoolDownJump = true;
+                        PlayerManager player = GameObject.FindWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>();
+                        player.PlayerJump();
+                    }
+                });
+            }
             else
             {
                 button.onClick.AddListener(() =>
                 {
                     ResetActionControl();
                 });
+            }
+        }
+
+        private void Update()
+        {
+            if (Type == TypeAction.Jump)
+            {
+                PlayerManager player = GameObject.FindWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>();
+                button.GetComponent<Image>().color = commandManager.DataThisGame.waitCoolDownJump && player.countCanJump > 0 ? new Color32(255, 255, 255, 150) : new Color32(255, 255, 255, 255);
+                transform.GetChild(1).GetComponent<Text>().text = $"{player.countCanJump} / {player.defaultCanJump}";
             }
         }
 

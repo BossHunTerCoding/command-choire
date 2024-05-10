@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using CommandChoice.Data;
 using CommandChoice.Model;
 using UnityEngine;
@@ -11,6 +13,10 @@ namespace CommandChoice.Component
     {
         [field: SerializeField] public int HP { get; private set; } = DataGlobal.HpDefault;
         [field: SerializeField] public int Mail { get; private set; } = DataGlobal.MailDefault;
+        const string DefaultPlayerMove = StaticText.Idle;
+        string LastPlayerMove = StaticText.Idle;
+        public int countCanJump = 2;
+        public int defaultCanJump { get; private set; } = 0;
         [SerializeField] private LayerMask LayerStopMove;
         [Header("Fields Auto Set")]
         [SerializeField] private Text textHP;
@@ -25,6 +31,8 @@ namespace CommandChoice.Component
 
         void Awake()
         {
+            LastPlayerMove = DefaultPlayerMove;
+            defaultCanJump = countCanJump;
             try
             {
                 indexMusicSource = int.Parse(SceneManager.GetActiveScene().name.Substring(6));
@@ -33,7 +41,6 @@ namespace CommandChoice.Component
             {
                 indexMusicSource = 0;
             }
-
             DataThisGame = new();
             audioSource = gameObject.AddComponent<AudioSource>();
         }
@@ -53,34 +60,86 @@ namespace CommandChoice.Component
             Mail = DataGlobal.MailDefault;
             UpdateText();
             transform.position = startSpawn;
+            LastPlayerMove = DefaultPlayerMove;
+            countCanJump = defaultCanJump;
         }
 
-        public IEnumerator PlayerMoveUp()
+        public IEnumerator PlayerMoveUp(string nameCommand)
         {
+            LastPlayerMove = nameCommand;
             Vector2 transformPlayer = transform.position;
             transformPlayer.y += 1;
             yield return CheckMovement(transformPlayer);
         }
 
-        public IEnumerator PlayerMoveDown()
+        public IEnumerator PlayerMoveDown(string nameCommand)
         {
+            LastPlayerMove = nameCommand;
             Vector2 transformPlayer = transform.position;
             transformPlayer.y -= 1;
             yield return CheckMovement(transformPlayer);
         }
 
-        public IEnumerator PlayerMoveLeft()
+        public IEnumerator PlayerMoveLeft(string nameCommand)
         {
+            LastPlayerMove = nameCommand;
             Vector2 transformPlayer = transform.position;
             transformPlayer.x -= 1;
             yield return CheckMovement(transformPlayer);
         }
 
-        public IEnumerator PlayerMoveRight()
+        public IEnumerator PlayerMoveRight(string nameCommand)
         {
+            LastPlayerMove = nameCommand;
             Vector2 transformPlayer = transform.position;
             transformPlayer.x += 1;
             yield return CheckMovement(transformPlayer);
+        }
+
+        public IEnumerator PlayerIdle(string nameCommand)
+        {
+            LastPlayerMove = nameCommand;
+            if (DataThisGame.EnemyObjects.Count > 0)
+            {
+                foreach (GameObject itemEnemy in DataThisGame.EnemyObjects)
+                {
+                    DogComponent enemy = itemEnemy.GetComponent<DogComponent>();
+                    if (enemy == null) continue;
+                    yield return StartCoroutine(enemy.Movement());
+                }
+            }
+        }
+
+        public void PlayerJump()
+        {
+            countCanJump--;
+            if (countCanJump < 0)
+            {
+                countCanJump = 0;
+                return;
+            }
+            transform.position = CheckMovement(transform.position);
+        }
+
+        Vector3 CheckDir(Vector3 position, int modifier)
+        {
+            switch (LastPlayerMove)
+            {
+                case StaticText.MoveUp:
+                    position.y += modifier;
+                    return position;
+                case StaticText.MoveDown:
+                    position.y -= modifier;
+                    return position;
+                case StaticText.MoveLeft:
+                    position.x -= modifier;
+                    return position;
+                case StaticText.MoveRight:
+                    position.x += modifier;
+                    return position;
+                default:
+                    return position;
+            }
         }
 
         private IEnumerator CheckMovement(Vector2 newMovement)
@@ -107,6 +166,33 @@ namespace CommandChoice.Component
                     yield return null;
                 }
             }
+            if (GameObject.FindWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>().DataThisGame.waitCoolDownJump) GameObject.FindWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>().DataThisGame.waitCoolDownJump = false;
+        }
+
+        private Vector3 CheckMovement(Vector3 newMovement)
+        {
+            List<Collider2D> colliders = new();
+            List<Vector3> vector = new();
+            for (int i = 1; i <= 2; i++)
+            {
+                colliders.Add(Physics2D.OverlapCircle(CheckDir(newMovement, i), 0.2f, LayerStopMove));
+                vector.Add(CheckDir(newMovement, i));
+            }
+            Vector3 returnMovement = newMovement;
+            for (int i = 0; i < colliders.Count; i++)
+            {
+                //print(colliders[i]);
+                if (colliders[i] != null)
+                {
+                    break;
+                }
+                else
+                {
+                    returnMovement = vector[i];
+                }
+            }
+            //print(colliders.Count);
+            return returnMovement;
         }
 
         public void UpdateHP(int getCountHP)

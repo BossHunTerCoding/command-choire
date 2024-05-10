@@ -7,6 +7,7 @@ namespace CommandChoice.Data
     [System.Serializable]
     public class DataGamePlay
     {
+        public bool waitCoolDownJump = false;
         public bool playActionCommand = false;
         public int percentScore = DataGlobal.ScoreDefault;
         [field: SerializeField] public List<GameObject> MailObjects { get; private set; } = new();

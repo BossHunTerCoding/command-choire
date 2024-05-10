@@ -221,6 +221,7 @@ namespace CommandChoice.Component
                 if (item.gameObject.name == "Run") item.gameObject.SetActive(true);
                 if (item.gameObject.name == "Reset") item.gameObject.SetActive(false);
             }
+            DataThisGame.waitCoolDownJump = false;
             DataThisGame.playActionCommand = false;
             AddCommandButton.SetActive(true);
         }
@@ -275,31 +276,23 @@ namespace CommandChoice.Component
                 }
                 if (item.value.name == StaticText.MoveUp)
                 {
-                    yield return player.PlayerMoveUp();
+                    yield return player.PlayerMoveUp(item.value.name);
                 }
                 else if (item.value.name == StaticText.MoveDown)
                 {
-                    yield return player.PlayerMoveDown();
+                    yield return player.PlayerMoveDown(item.value.name);
                 }
                 else if (item.value.name == StaticText.MoveLeft)
                 {
-                    yield return player.PlayerMoveLeft();
+                    yield return player.PlayerMoveLeft(item.value.name);
                 }
                 else if (item.value.name == StaticText.MoveRight)
                 {
-                    yield return player.PlayerMoveRight();
+                    yield return player.PlayerMoveRight(item.value.name);
                 }
                 else if (item.value.name == StaticText.Idle)
                 {
-                    if (DataThisGame.EnemyObjects.Count > 0)
-                    {
-                        foreach (GameObject itemEnemy in DataThisGame.EnemyObjects)
-                        {
-                            DogComponent enemy = itemEnemy.GetComponent<DogComponent>();
-                            if (enemy == null) continue;
-                            StartCoroutine(enemy.Movement());
-                        }
-                    }
+                    yield return player.PlayerIdle(item.value.name);
                 }
                 else if (item.value.name == StaticText.Loop)
                 {
