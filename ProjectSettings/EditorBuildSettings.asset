@@ -15,36 +15,33 @@ EditorBuildSettings:
     path: Assets/Scene/Menu/SelectLevel.unity
     guid: 8cd8ebc90ad84bf4ebba65cc536ebf6b
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_1.unity
-    guid: e357ee8fa9606d0448df5d1a7048284a
+    path: Assets/Scene/Level/Level_1.unity
+    guid: 087b402f1d10f6241834ea0ebc931ab2
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_2.unity
-    guid: 58741e65e30148e45ad4621ff6e1097a
+    path: Assets/Scene/Level/Level_2.unity
+    guid: 029a14c884a724a4abb36010961bc84c
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_3.unity
-    guid: a92bb48a856850c478dd6d9b2e80c16d
+    path: Assets/Scene/Level/Level_3.unity
+    guid: 26befa2764f26f248915db6aa20d68a1
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_4.unity
-    guid: 35312cc2fd414204a82fe5861e0d7efc
+    path: Assets/Scene/Level/Level_4.unity
+    guid: f9343bbb62f3ac64194d4c8649f52121
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_4.unity
-    guid: 35312cc2fd414204a82fe5861e0d7efc
+    path: Assets/Scene/Level/Level_5.unity
+    guid: 318d2b827efe9bb47aef7f090a74fa04
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_5.unity
-    guid: 69aac12082525f74095e652b30f8836b
+    path: Assets/Scene/Level/Level_6.unity
+    guid: 7c5c872d0a75a5849815eb01c09794d2
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_6.unity
-    guid: 319df2def1892ff4194c9db74a6bdcea
+    path: Assets/Scene/Level/Level_7.unity
+    guid: 0ac80a50106f78d43adb48175958925e
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_7.unity
-    guid: 4448aadb323c38342b3e0705ec7b053e
+    path: Assets/Scene/Level/Level_8.unity
+    guid: d659f8bba649fe44fac0821f695dc0ee
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_8.unity
-    guid: abac8fa74fa1844419744b49fdf356a0
+    path: Assets/Scene/Level/Level_9.unity
+    guid: eddf6cf5128795e47b416bbae84040b8
   - enabled: 1
-    path: Assets/Scene/Level saved/Level_9.unity
-    guid: 674a8f776fa767c4c961e866e91e77d3
-  - enabled: 1
-    path: Assets/Scene/Level saved/Level_10.unity
-    guid: 3a65abfff2c535e4eb5b7856b56afe23
+    path: Assets/Scene/Level/Level_10.unity
+    guid: 81995e12cba0c1443b3912b503235f2e
   m_configObjects: {}
