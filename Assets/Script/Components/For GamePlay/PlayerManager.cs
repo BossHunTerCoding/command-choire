@@ -61,6 +61,7 @@ namespace CommandChoice.Component
 
         public void ResetGame()
         {
+            StopAllCoroutines();
             HP = DataGlobal.HpDefault;
             Mail = DataGlobal.MailDefault;
             UpdateText();

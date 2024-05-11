@@ -8,6 +8,7 @@ using UnityEngine;
 public class DogComponent : MonoBehaviour
 {
     [SerializeField] int indexNavigator = 0;
+    public int indexSpawnDefault { get; private set; } = 0;
     [SerializeField] int indexMovement = 0;
     [SerializeField] List<GameObject> dirMovement;
     [SerializeField] Coroutine stepFootWalk;
@@ -22,11 +23,12 @@ public class DogComponent : MonoBehaviour
     void Awake()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
+        indexSpawnDefault = Random.Range(0, dirMovement.Count - 1);
+        indexMovement = indexSpawnDefault;
     }
 
     void Start()
     {
-        indexMovement = Random.Range(0, dirMovement.Count - 1);
         transform.position = new(dirMovement[indexMovement].transform.position.x, dirMovement[indexMovement].transform.position.y, transform.position.z);
         startPosition = transform.position;
         startRotation = transform.rotation;
@@ -80,13 +82,14 @@ public class DogComponent : MonoBehaviour
         float newRotate = 0f;
         if (transform.position.y < NewTargetMove.y) newRotate = -90f;
         else if (transform.position.y > NewTargetMove.y) newRotate = 90f;
-        return new Quaternion(transform.rotation.x, transform.rotation.y, newRotate, newRotate);
+        return Quaternion.Euler(transform.rotation.x, transform.rotation.y, newRotate);
     }
 
     public void ResetGame()
     {
-        indexMovement = 0;
-        indexNavigator = 0;
+        StopAllCoroutines();
+        indexMovement = indexSpawnDefault;
+        indexNavigator = indexSpawnDefault;
         transform.position = startPosition;
         transform.rotation = startRotation;
         stepFootWalk = StartCoroutine(ShowNavigatorFootWalk());
