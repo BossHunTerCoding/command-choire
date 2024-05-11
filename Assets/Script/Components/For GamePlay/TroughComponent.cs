@@ -21,7 +21,6 @@ public class TroughComponent : MonoBehaviour
         if (other.gameObject.CompareTag(StaticText.TagPlayer))
         {
             PlayerManager player = other.gameObject.GetComponent<PlayerManager>();
-            countLostMail = countLostMail > 0 ? countLostMail * -1 : countLostMail;
             player.UpdateMail(-countLostMail);
             CommandManager.TriggerObjects(gameObject.tag);
         }

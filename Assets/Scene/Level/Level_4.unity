@@ -12109,6 +12109,10 @@ PrefabInstance:
       value: -0.1640625
       objectReference: {fileID: 0}
     - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandEnv.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
       propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[0].<Active>k__BackingField
       value: 0
       objectReference: {fileID: 0}
@@ -14188,6 +14192,10 @@ PrefabInstance:
     - target: {fileID: 6589511095598497096, guid: 5518853cb38eefa498f03c98d291895b, type: 3}
       propertyPath: m_Name
       value: Krone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8267583044640232726, guid: 5518853cb38eefa498f03c98d291895b, type: 3}
+      propertyPath: addTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8267583044640232726, guid: 5518853cb38eefa498f03c98d291895b, type: 3}
       propertyPath: RandomSpawns.Array.size

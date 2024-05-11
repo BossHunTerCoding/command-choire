@@ -19,6 +19,7 @@ namespace CommandChoice.Component
         [field: SerializeField] public GameObject AddCommandButton { get; private set; }
         [field: SerializeField] public GameObject DropRemoveCommand { get; private set; }
         [field: SerializeField] public List<Transform> ListCommandSelected { get; private set; } = new();
+        Transform parentCommandBreak;
 
         public static string triggerEvent = null;
 
@@ -183,6 +184,7 @@ namespace CommandChoice.Component
         {
             StopAllCoroutines();
             if (stopCoroutinesOnly) return;
+            parentCommandBreak = null;
             countTime.text = "";
             List<GameObject> ListAllCommand = new() { };
             ListAllCommand.AddRange(GameObject.FindGameObjectsWithTag(StaticText.TagCommand));
@@ -254,6 +256,20 @@ namespace CommandChoice.Component
                         }
                     };
                 }
+                if (parentCommandBreak != null)
+                {
+                    if ((item.value.parent == parentCommandBreak) || (item.value == parentCommandBreak))
+                    {
+                        CommandFunction checkCommandLoop = parentCommandBreak.GetComponent<Command>().CommandFunction;
+                        checkCommandLoop.countTime = checkCommandLoop.countDefault;
+                        checkCommandLoop.UpdateTextCommand(parentCommandBreak.name);
+                        continue;
+                    }
+                    else
+                    {
+                        parentCommandBreak = null;
+                    }
+                };
                 yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 if (item.value.name == StaticText.Loop)
                 {
@@ -345,6 +361,17 @@ namespace CommandChoice.Component
                 }
                 yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 listCommand[item.index].GetComponent<Command>().ResetAction();
+                try
+                {
+                    if (player.Collider2D.GetComponent<MudPitComponent>() != null)
+                    {
+                        if (item.value.parent.name == StaticText.Loop)
+                        {
+                            parentCommandBreak = item.value.parent;
+                        }
+                    };
+                }
+                catch (System.Exception) { }
                 if (triggerEvent != null)
                 {
                     GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Trigger");

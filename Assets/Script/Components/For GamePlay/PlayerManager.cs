@@ -54,6 +54,11 @@ namespace CommandChoice.Component
             if (MusicManagerComponent.instance != null) StartCoroutine(MusicManagerComponent.instance.ChangeSoundBackground(MusicManagerComponent.instance.MusicBackGround[indexMusicSource]));
         }
 
+        public void ClearCollider2D()
+        {
+            Collider2D = null;
+        }
+
         public void ResetGame()
         {
             HP = DataGlobal.HpDefault;
@@ -112,6 +117,7 @@ namespace CommandChoice.Component
 
         public void PlayerJump()
         {
+            if (LastPlayerMove == StaticText.Idle) return;
             countCanJump--;
             if (countCanJump < 0)
             {
@@ -230,7 +236,7 @@ namespace CommandChoice.Component
 
         void OnTriggerExit2D(Collider2D other)
         {
-            Collider2D = null;
+            ClearCollider2D();
         }
     }
 }

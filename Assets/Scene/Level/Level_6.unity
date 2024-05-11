@@ -945,6 +945,10 @@ PrefabInstance:
       propertyPath: RandomSpawns.Array.data[2]
       value: 
       objectReference: {fileID: 611588105}
+    - target: {fileID: 9138181208528317195, guid: 5518853cb38eefa498f03c98d291895b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10960,6 +10964,10 @@ PrefabInstance:
       propertyPath: RandomSpawns.Array.data[2]
       value: 
       objectReference: {fileID: 1479031852}
+    - target: {fileID: 9138181208528317195, guid: 5518853cb38eefa498f03c98d291895b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11900,15 +11908,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -16866,6 +16874,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3730949669673037830, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandEnv.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}

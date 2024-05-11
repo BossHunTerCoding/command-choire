@@ -12388,6 +12388,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
+      propertyPath: <ListCommandModel>k__BackingField.commandEnv.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216926691805279350, guid: d95dc8eaacb47694688fef0667ac62b2, type: 3}
       propertyPath: <ListCommand>k__BackingField.commandFunctions.Array.data[0].<Active>k__BackingField
       value: 0
       objectReference: {fileID: 0}
@@ -14885,15 +14889,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1699396277241164922, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -14910,6 +14914,14 @@ PrefabInstance:
     - target: {fileID: 6798022988716891210, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
       propertyPath: m_Name
       value: Dog
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514748978899770286, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514748978899770286, guid: 361faa2b9a8b2914e85a0467ad2970b1, type: 3}
+      propertyPath: m_FlipY
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
