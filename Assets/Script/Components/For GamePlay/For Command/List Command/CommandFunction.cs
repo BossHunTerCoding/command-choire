@@ -12,13 +12,12 @@ namespace CommandChoice.Component
         [SerializeField] private GameObject commandFunction;
         public GameObject RootListViewCommand { get; private set; }
         public bool countIf = false;
+        public bool activeSkipTo = false;
         public int countDefault;
         public int countTime;
 
         public GameObject triggerDefault;
         public GameObject trigger;
-
-        [SerializeField] private string nameCommand;
 
         void Awake()
         {
@@ -38,7 +37,6 @@ namespace CommandChoice.Component
             {
                 commandFunction = Instantiate(Resources.Load<GameObject>(StaticText.PathPrefabBlockCommandForFunction), transform.parent);
                 commandFunction.name = gameObject.name;
-                nameCommand = commandFunction.name;
                 gameObject.name = StaticText.ObjectChild;
                 gameObject.tag = StaticText.Untagged;
                 Command commandComponent = commandFunction.AddComponent<Command>();
@@ -46,7 +44,7 @@ namespace CommandChoice.Component
                 commandComponent.enabled = true;
                 gameObject.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    if (!CommandManager.DataThisGame.playActionCommand)
+                    if (!CommandManager.DataThisGame.playActionCommand && !CommandManager.DataThisGame.activeSelectSkipToMode)
                     {
                         if (StaticText.CheckCommandCanConfig(commandComponent.gameObject.name))
                         {
@@ -90,6 +88,7 @@ namespace CommandChoice.Component
             if (command.gameObject.name == StaticText.Loop) CommandManager.ConfigCommand(command, this);
             else if (command.gameObject.name == StaticText.If) gameObject.GetComponent<IfCommand>().GenerateMenu();
             else if (command.gameObject.name == StaticText.Trigger) transform.parent.AddComponent<TriggerComponent>().GenerateMenu();
+            else if(command.gameObject.name == StaticText.SkipTo) transform.parent.AddComponent<SkipToCommand>().SelectSkipToMode();
         }
 
         public void UpdateColor(Transform transform, bool revers = false)

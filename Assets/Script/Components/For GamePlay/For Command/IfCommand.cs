@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using CommandChoice.Component;
-using CommandChoice.Data;
 using CommandChoice.Model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +10,12 @@ public class IfCommand : MonoBehaviour
     [field: SerializeField] public GameObject command { get; private set; }
     [SerializeField] GameObject menuListCommand;
     Button clickCommand;
-    
+    CommandManager commandManager;
+
     void Awake()
     {
         menuListCommand = Resources.Load<GameObject>(StaticText.PathPrefabMenuListCommand);
+        commandManager = GameObject.FindWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
     }
 
     void Start()
@@ -24,7 +23,10 @@ public class IfCommand : MonoBehaviour
         clickCommand = addCommand.GetComponent<Button>();
         if (canClick)
         {
-            clickCommand.GetComponent<Button>().onClick.AddListener(() => GenerateMenu());
+            clickCommand.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                if (!commandManager.DataThisGame.activeSelectSkipToMode) GenerateMenu();
+            });
         }
     }
 

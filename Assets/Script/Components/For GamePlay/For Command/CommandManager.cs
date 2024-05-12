@@ -197,6 +197,7 @@ namespace CommandChoice.Component
                 CommandFunction command2 = command1.CommandFunction;
                 if (command2 == null) continue;
                 command2.countIf = false;
+                command2.activeSkipTo = false;
                 command2.UpdateTextCommand(item.name, true);
             }
             GameObject.FindGameObjectWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>().ResetGame();
@@ -276,6 +277,10 @@ namespace CommandChoice.Component
                     Command command = item.value.GetComponent<Command>();
                     if (!command.CommandFunction.countIf) countTime.text = $"Count: {++TimeCount}";
                     if (!command.CommandFunction.countIf) item.value.GetComponent<Command>().CommandFunction.countIf = true;
+                }
+                else if (item.value.name == StaticText.SkipTo)
+                {
+                    if (item.value.GetComponent<Command>().CommandFunction.activeSkipTo) continue;
                 }
                 else
                 {
@@ -359,6 +364,25 @@ namespace CommandChoice.Component
                         }
                     }
                 }
+                else if (item.value.name == StaticText.SkipTo)
+                {
+                    SkipToCommand skipToCommand = item.value.GetComponent<SkipToCommand>();
+                    if (!item.value.GetComponent<Command>().CommandFunction.activeSkipTo)
+                    {
+                        item.value.GetComponent<Command>().CommandFunction.activeSkipTo = true;
+                        List<Transform> listTransform = new();
+                        for (int i = skipToCommand.transformSelectCommand.GetSiblingIndex(); i < skipToCommand.transformSelectCommand.parent.transform.childCount; i++)
+                        {
+                            if (skipToCommand.transformSelectCommand.parent.transform.GetChild(i) == item.value) break;
+                            listTransform.Add(skipToCommand.transformSelectCommand.parent.transform.GetChild(i));
+                        }
+                        yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
+                        listCommand[item.index].GetComponent<Command>().ResetAction();
+                        ListCommandSelected.Clear();
+                        CheckLoopForCountTextUI(listTransform);
+                        yield return RunCommand(LoopCheckCommand(listTransform), TimeCount);
+                    }
+                }
                 yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 listCommand[item.index].GetComponent<Command>().ResetAction();
                 try
@@ -401,6 +425,29 @@ namespace CommandChoice.Component
             {
                 if (item.name == StaticText.Loop)
                 {
+                    item.GetComponent<Command>().CommandFunction.activeSkipTo = false;
+                    item.GetComponent<Command>().CommandFunction.countIf = false;
+                    if (item.GetComponent<Command>().CommandFunction.countTime <= 0)
+                    {
+                        CommandFunction checkCommandLoop = item.GetComponent<Command>().CommandFunction;
+                        checkCommandLoop.countTime = checkCommandLoop.countDefault;
+                        checkCommandLoop.UpdateTextCommand(item.name);
+                    }
+                    if (item.transform.childCount > 1)
+                    {
+                        CheckLoopForCountTextUI(item.transform);
+                    }
+                }
+            }
+        }
+
+        void CheckLoopForCountTextUI(List<Transform> transformParent)
+        {
+            foreach (Transform item in transformParent)
+            {
+                if (item.name == StaticText.Loop)
+                {
+                    item.GetComponent<Command>().CommandFunction.activeSkipTo = false;
                     item.GetComponent<Command>().CommandFunction.countIf = false;
                     if (item.GetComponent<Command>().CommandFunction.countTime <= 0)
                     {
@@ -425,6 +472,11 @@ namespace CommandChoice.Component
         }
 
         public static void TriggerObjects(string tagObjectTrigger)
+        {
+            triggerEvent = tagObjectTrigger;
+        }
+
+        public static void SkipToConfig(string tagObjectTrigger)
         {
             triggerEvent = tagObjectTrigger;
         }

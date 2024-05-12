@@ -10,11 +10,13 @@ public class TriggerComponent : MonoBehaviour
     public enum TypeTrigger { Enemy, Mail }
     [field: SerializeField] public bool canClick { get; private set; } = true;
     public TypeTrigger typeTrigger;
+    CommandManager commandManager;
     [SerializeField] GameObject menuListCommand;
     public string tagTrigger { get; private set; }
 
     void Awake()
     {
+        commandManager = GameObject.FindWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
         menuListCommand = Resources.Load<GameObject>(StaticText.PathPrefabMenuListCommand);
     }
 
@@ -24,7 +26,10 @@ public class TriggerComponent : MonoBehaviour
         UpdateTrigger();
         if (canClick)
         {
-            transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => GenerateMenu());
+            transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() =>
+            {
+                if (!commandManager.DataThisGame.activeSelectSkipToMode) GenerateMenu();
+            });
         }
     }
 
