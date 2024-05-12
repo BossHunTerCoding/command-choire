@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5413955184913766265}
   m_Layer: 0
   m_Name: Water
-  m_TagString: Untagged
+  m_TagString: Trough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countLostMail: 1
   RandomSpawns: []
+  activeCheckPlayerMove: 0
 --- !u!61 &5413955184913766265
 BoxCollider2D:
   m_ObjectHideFlags: 0

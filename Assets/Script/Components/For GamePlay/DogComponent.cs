@@ -22,6 +22,7 @@ public class DogComponent : MonoBehaviour
 
     void Awake()
     {
+        gameObject.tag = StaticText.TagEnemy;
         audioSource = gameObject.AddComponent<AudioSource>();
         indexSpawnDefault = Random.Range(0, dirMovement.Count - 1);
         indexMovement = indexSpawnDefault;

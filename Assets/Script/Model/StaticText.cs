@@ -24,6 +24,7 @@ namespace CommandChoice.Model
         public const string UiMail = "Ui Mail";
         public const string TagMail = "Mail";
         public const string TagEnemy = "Enemy";
+        public const string TagTrough = "Trough";
         public const string TagHP = "HP";
         public const string TagCommand = "Command";
         public const string Untagged = "Untagged";

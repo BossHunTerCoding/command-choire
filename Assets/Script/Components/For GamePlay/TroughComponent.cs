@@ -7,6 +7,12 @@ public class TroughComponent : MonoBehaviour
 {
     [SerializeField] int countLostMail = 1;
     [SerializeField] List<Transform> RandomSpawns;
+    [SerializeField] bool activeCheckPlayerMove = false;
+
+    void Awake()
+    {
+        gameObject.tag = StaticText.TagTrough;
+    }
 
     void Start()
     {
@@ -14,6 +20,12 @@ public class TroughComponent : MonoBehaviour
         {
             transform.position = RandomSpawns[Random.Range(0, RandomSpawns.Count - 1)].position;
         }
+        if (activeCheckPlayerMove) gameObject.SetActive(Random.Range(0, 1) == 1);
+    }
+
+    public void EnAndDisGameObject()
+    {
+        if (activeCheckPlayerMove) gameObject.SetActive(!gameObject.activeSelf);
     }
 
     void OnTriggerEnter2D(Collider2D other)

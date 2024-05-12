@@ -23,7 +23,7 @@ namespace CommandChoice.Component
         [SerializeField] private Text textMail;
         [SerializeField] private Vector3 startSpawn;
         [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] DataGamePlay DataThisGame;
+        [SerializeField] CommandManager commandManager;
         AudioSource audioSource;
         int indexMusicSource;
 
@@ -41,12 +41,12 @@ namespace CommandChoice.Component
             {
                 indexMusicSource = 0;
             }
-            DataThisGame = new();
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
         void Start()
         {
+            commandManager = GameObject.FindWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
             textHP = GameObject.FindGameObjectWithTag(StaticText.TagHP).transform.GetComponentInChildren<Text>();
             textMail = GameObject.Find(StaticText.UiMail).transform.GetComponentInChildren<Text>();
             UpdateText();
@@ -105,13 +105,11 @@ namespace CommandChoice.Component
         public IEnumerator PlayerIdle(string nameCommand)
         {
             LastPlayerMove = nameCommand;
-            if (DataThisGame.EnemyObjects.Count > 0)
+            if (commandManager.DataThisGame.EnemyObjects.Count > 0)
             {
-                foreach (GameObject itemEnemy in DataThisGame.EnemyObjects)
+                foreach (DogComponent enemyObject in commandManager.DataThisGame.EnemyObjects)
                 {
-                    DogComponent enemy = itemEnemy.GetComponent<DogComponent>();
-                    if (enemy == null) continue;
-                    yield return StartCoroutine(enemy.Movement());
+                    yield return StartCoroutine(enemyObject.Movement());
                 }
             }
         }
@@ -151,13 +149,19 @@ namespace CommandChoice.Component
 
         private IEnumerator CheckMovement(Vector2 newMovement)
         {
-            if (DataThisGame.EnemyObjects.Count > 0)
+            if (commandManager.DataThisGame.EnemyObjects.Count > 0)
             {
-                foreach (GameObject itemEnemy in DataThisGame.EnemyObjects)
+                foreach (DogComponent enemyObject in commandManager.DataThisGame.EnemyObjects)
                 {
-                    DogComponent enemy = itemEnemy.GetComponent<DogComponent>();
-                    if (enemy == null) continue;
-                    StartCoroutine(enemy.Movement());
+                    StartCoroutine(enemyObject.Movement());
+                }
+            }
+
+            if (commandManager.DataThisGame.TroughObjects.Count > 0)
+            {
+                foreach (TroughComponent troughObject in commandManager.DataThisGame.TroughObjects)
+                {
+                    troughObject.EnAndDisGameObject();
                 }
             }
 

@@ -61,9 +61,8 @@ namespace CommandChoice.Component
         {
             if (DataThisGame.EnemyObjects.Count > 0)
             {
-                foreach (GameObject item in DataThisGame.EnemyObjects)
+                foreach (DogComponent enemy in DataThisGame.EnemyObjects)
                 {
-                    if (!item.TryGetComponent<DogComponent>(out var enemy)) continue;
                     enemy.StopFootWalkDog();
                 }
             }
@@ -199,24 +198,23 @@ namespace CommandChoice.Component
                 command2.countIf = false;
                 command2.activeSkipTo = false;
                 command2.UpdateTextCommand(item.name, true);
+                SkipToCommand skipTo = item.GetComponent<SkipToCommand>();
+                if (skipTo != null) skipTo.StopAllAction();
             }
             GameObject.FindGameObjectWithTag(StaticText.TagPlayer).GetComponent<PlayerManager>().ResetGame();
             if (DataThisGame.MailObjects.Count > 0)
             {
-                foreach (GameObject item in DataThisGame.MailObjects)
+                foreach (MailComponent mail in DataThisGame.MailObjects)
                 {
-                    MailComponent mail = item.GetComponent<MailComponent>();
                     if (mail == null) continue;
                     mail.ResetGame();
                 }
             }
             if (DataThisGame.EnemyObjects.Count > 0)
             {
-                foreach (GameObject item in DataThisGame.EnemyObjects)
+                foreach (DogComponent enemyObject in DataThisGame.EnemyObjects)
                 {
-                    DogComponent enemy = item.GetComponent<DogComponent>();
-                    if (enemy == null) continue;
-                    enemy.ResetGame();
+                    enemyObject.ResetGame();
                 }
             }
             foreach (Transform item in GameObject.Find("Right-Bottom").transform)
@@ -366,22 +364,15 @@ namespace CommandChoice.Component
                 }
                 else if (item.value.name == StaticText.SkipTo)
                 {
+                    yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
+                    item.value.GetComponent<Command>().ResetAction();
                     SkipToCommand skipToCommand = item.value.GetComponent<SkipToCommand>();
                     if (!item.value.GetComponent<Command>().CommandFunction.activeSkipTo)
                     {
                         item.value.GetComponent<Command>().CommandFunction.activeSkipTo = true;
-                        List<Transform> listTransform = new();
-                        for (int i = skipToCommand.transformSelectCommand.GetSiblingIndex(); i < skipToCommand.transformSelectCommand.parent.transform.childCount; i++)
-                        {
-                            if (skipToCommand.transformSelectCommand.parent.transform.GetChild(i) == item.value) break;
-                            listTransform.Add(skipToCommand.transformSelectCommand.parent.transform.GetChild(i));
-                        }
-                        yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
-                        listCommand[item.index].GetComponent<Command>().ResetAction();
-                        ListCommandSelected.Clear();
-                        CheckLoopForCountTextUI(listTransform);
-                        yield return RunCommand(LoopCheckCommand(listTransform), TimeCount);
+                        skipToCommand.PlaySkip();
                     }
+                    StopAllCoroutines();
                 }
                 yield return new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
                 listCommand[item.index].GetComponent<Command>().ResetAction();
@@ -441,7 +432,7 @@ namespace CommandChoice.Component
             }
         }
 
-        void CheckLoopForCountTextUI(List<Transform> transformParent)
+        public void CheckLoopForCountTextUI(List<Transform> transformParent)
         {
             foreach (Transform item in transformParent)
             {

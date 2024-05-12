@@ -1,5 +1,6 @@
-using System.Collections;
+using System.Collections.Generic;
 using CommandChoice.Component;
+using CommandChoice.Data;
 using CommandChoice.Model;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,7 +10,7 @@ public class SkipToCommand : MonoBehaviour
 {
     CommandManager commandManager;
     Command command;
-    UnityAction action;
+    private List<UnityAction> actionList = new List<UnityAction>();
 
     public Transform transformSelectCommand;
 
@@ -29,11 +30,32 @@ public class SkipToCommand : MonoBehaviour
 
     void OnDestroy()
     {
-        foreach (GameObject item in commandManager.DataThisGame.buttonGamePlay)
+        if (commandManager.DataThisGame.buttonGamePlay != null)
         {
-            item.SetActive(true);
+            foreach (GameObject item in commandManager.DataThisGame.buttonGamePlay)
+            {
+                item.SetActive(true);
+            }
         }
-        
+    }
+
+    public void StopAllAction()
+    {
+        StopAllCoroutines();
+    }
+
+    public void PlaySkip()
+    {
+        List<Transform> listTransform = new();
+        for (int i = transformSelectCommand.GetSiblingIndex(); i < transformSelectCommand.parent.transform.childCount; i++)
+        {
+            listTransform.Add(transformSelectCommand.parent.transform.GetChild(i));
+        }
+        new WaitForSeconds(DataGlobal.timeDeray / float.Parse(GameObject.Find("Speed").transform.GetChild(0).GetComponent<Text>().text));
+        GetComponent<Command>().ResetAction();
+        commandManager.ListCommandSelected.Clear();
+        commandManager.CheckLoopForCountTextUI(listTransform);
+        StartCoroutine(commandManager.RunCommand(commandManager.LoopCheckCommand(listTransform), commandManager.TimeCount));
     }
 
     public void SelectSkipToMode()
@@ -43,16 +65,20 @@ public class SkipToCommand : MonoBehaviour
         {
             item.SetActive(false);
         }
+        // Clear the action list
+        actionList.Clear();
         foreach (GameObject item in GameObject.FindGameObjectsWithTag(StaticText.TagCommand))
         {
             if (transform == item.transform) continue;
-            action = () => MakeSelect(item.transform);
+            UnityAction action = () => MakeSelect(item.transform);
             Outline outline = item.AddComponent<Outline>();
             outline.effectColor = Color.yellow;
             outline.effectDistance = new Vector2(8f, 8f);
             Command command = item.GetComponent<Command>();
             Button button = command.Type == TypeCommand.Behavior ? item.GetComponent<Button>() : command.CommandFunction.GetComponent<Button>();
             button.onClick.AddListener(action);
+            // Add the action to the list
+            actionList.Add(action);
         }
     }
 
@@ -71,7 +97,11 @@ public class SkipToCommand : MonoBehaviour
             transformSelectCommand = transformSelect;
             Command command = item.GetComponent<Command>();
             Button buttons = command.Type == TypeCommand.Behavior ? item.GetComponent<Button>() : command.CommandFunction.GetComponent<Button>();
-            buttons.onClick.RemoveListener(action);
+            // Remove all listeners from the button
+            foreach (var action in actionList)
+            {
+                buttons.onClick.RemoveListener(action);
+            }
         }
     }
 }

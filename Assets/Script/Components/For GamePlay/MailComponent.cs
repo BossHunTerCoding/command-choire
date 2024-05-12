@@ -7,15 +7,32 @@ namespace CommandChoice.Component
 {
     public class MailComponent : MonoBehaviour
     {
-        [SerializeField] int countMail = 0;
-        [SerializeField] List<Transform> RandomSpawns;
+        [SerializeField] int countMail = 1;
+        int? indexSpawn;
+        [SerializeField] List<FieldTransform> RandomSpawns;
+        public bool isParent = true;
+
+        void Awake()
+        {
+            indexSpawn = indexSpawn ?? Random.Range(0, RandomSpawns.Count - 1);
+            transform.Find("Canvas").GetComponentInChildren<Text>().text = countMail.ToString();
+        }
 
         void Start()
         {
-            transform.Find("Canvas").GetComponentInChildren<Text>().text = countMail.ToString();
-            if (RandomSpawns.Count > 0)
+            if (isParent)
             {
-                transform.position = RandomSpawns[Random.Range(0, RandomSpawns.Count - 1)].position;
+                CommandManager commandManager = GameObject.FindWithTag(StaticText.RootListViewCommand).GetComponent<CommandManager>();
+                foreach (Transform item in RandomSpawns[indexSpawn ?? 0].listTransform)
+                {
+                    MailComponent mailObject = Instantiate(gameObject, transform.parent).GetComponent<MailComponent>();
+                    gameObject.tag = StaticText.TagMail;
+                    mailObject.transform.position = item.position;
+                    mailObject.isParent = false;
+                    commandManager.DataThisGame.MailObjects.Add(mailObject);
+                }
+
+                Destroy(gameObject);
             }
         }
 
